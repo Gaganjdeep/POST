@@ -1,0 +1,81 @@
+package ggn.ameba.post.UtillsG;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
+/**
+ * Created by gagandeep on 29 Apr 2016.
+ */
+public class DateUtilsG
+{
+
+    public static String SEVER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    public static String G_FORMAT     = "MMM dd, hh:mm a";
+
+
+    private static final SimpleDateFormat sdfServer = new SimpleDateFormat(SEVER_FORMAT);
+    private static final SimpleDateFormat sdfG      = new SimpleDateFormat(G_FORMAT);
+
+    public static Date getCurrentDate()
+    {
+        Calendar c = Calendar.getInstance();
+
+        return new Date(c.getTimeInMillis());
+
+    }
+
+
+    public static Date dateServer(String date)
+    {
+        sdfServer.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date date_ = null;
+        try
+        {
+            date_ = sdfServer.parse(date);
+
+
+            return date_;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return date_;
+        }
+    }
+
+
+    public static long timeLeft(String date)
+    {
+//        sdfServer.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        try
+        {
+            Date     dateServer = sdfServer.parse(date);
+            Calendar cServer    = Calendar.getInstance();
+            cServer.setTime(dateServer);
+
+            long endDateTime     = cServer.getTimeInMillis();
+            long currentDateTime = System.currentTimeMillis();
+
+
+            System.out.println((endDateTime - currentDateTime) + "yo yo yo yo yo yo yo");
+
+            return endDateTime - currentDateTime;
+
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+        return 0;
+    }
+
+
+}

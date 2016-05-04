@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical"
+    >
+
+
+    <FrameLayout
+        android:layout_width="140dp"
+        android:layout_height="200dp"
+        android:background="@mipmap/frame_wall_of_fame"
+        android:padding="17dp">
+
+        <ggn.ameba.post.widget.RoundedCornersGaganImg
+            android:id="@+id/imgVpost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/food_demo_img"
+            android:scaleType="centerCrop"/>
+
+    </FrameLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/wall_of_frame_small"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Theme : Food"
+        android:textColor="@color/golden"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:typeface="serif"/>
+
+
+</LinearLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/root"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center">
+
+
+    <ViewStub
+        android:id="@+id/days_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout="@layout/days"/>
+
+
+    <ViewStub
+        android:id="@+id/hours_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout="@layout/hours"/>
+
+
+    <ViewStub
+        android:id="@+id/minutes_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout="@layout/minutes"/>
+
+    <ViewStub
+        android:id="@+id/seconds_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout="@layout/seconds"/>
+
+    <!--<ViewStub
+        android:id="@+id/milliseconds_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout="@layout/milliseconds"/>-->
+
+</LinearLayout>

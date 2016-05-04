@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:gravity="center"
+              android:padding="2dp"
+              android:layout_height="match_parent">
+
+
+    <ggn.ameba.post.widget.RoundedCornersGaganImg
+        android:scaleType="centerCrop"
+        android:id="@+id/imgVpost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/food_demo_img"/>
+
+
+</LinearLayout>

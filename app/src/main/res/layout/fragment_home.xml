@@ -1,0 +1,77 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:animateLayoutChanges="true"
+              tools:context=".activities.fragments.HomeFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+
+        <TextView
+            android:id="@+id/tvPOST"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:text="POST"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/searchView"
+            style="@style/CitySearchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="200dp"/>
+
+
+        <ImageView
+            android:id="@+id/imgMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="7dp"
+            android:background="@drawable/default_selected"
+            android:padding="2dp"
+            android:src="@mipmap/ic_message"/>
+
+
+        <ImageView
+            android:id="@+id/imgSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/default_selected"
+            android:padding="2dp"
+            android:src="@mipmap/ic_setting"/>
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_margin="4dp"/>
+
+
+    <ProgressBar
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+</LinearLayout>

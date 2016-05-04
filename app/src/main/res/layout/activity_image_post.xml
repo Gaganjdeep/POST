@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:imagecrop="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".activities.ImagePostActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="?colorAccent"
+        />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.naver.android.helloyako.imagecrop.view.ImageCropView
+                    android:id="@+id/imgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:src="@drawable/default_grey"
+                    imagecrop:gridInnerColor="#66ffffff"
+                    imagecrop:gridInnerStroke="1dp"
+                    imagecrop:gridOuterColor="#ffffff"
+                    imagecrop:gridOuterStroke="1dp"
+                    imagecrop:setInnerGridMode="on"
+                    imagecrop:setOuterGridMode="on"
+                    />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:drawableLeft="@mipmap/ic_map"
+                android:drawablePadding="10dp"
+                android:text="Current Location"
+                android:textColor="@color/black"
+                android:textSize="16sp"/>
+
+            <EditText
+                android:id="@+id/edHashTag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:hint="#Hash tags"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

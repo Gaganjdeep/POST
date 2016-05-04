@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "ggn.ameba.post"
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+
+        /*   def clientBuildDate = new Date().format('dd-MMM')
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+
+                output.outputFile = new File(output.outputFile.parent,
+                        output.outputFile.name.replace("-debug", "-" + "Post " + clientBuildDate)
+                )
+            }
+        }*/
+
+    }
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile files('libs/mylocationG.jar')
+    compile files('libs/gcm.jar')
+    compile 'com.android.support:appcompat-v7:23.2.1'
+    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:design:23.2.1'
+    compile 'com.naver.android.helloyako:imagecropview:1.0.5'
+    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+}
