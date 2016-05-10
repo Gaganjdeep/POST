@@ -4,14 +4,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,6 +30,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import ggn.ameba.post.R;
 import ggn.ameba.post.UtillsG.CallBackG;
@@ -32,6 +41,7 @@ import ggn.ameba.post.WebService.SuperAsyncG;
 import ggn.ameba.post.adapter.ChatMsgAdapter;
 import ggn.ameba.post.adapter.MsgDataModel;
 import ggn.ameba.post.adapter.RecentChatModel;
+import ggn.ameba.post.widget.CircleTransform;
 import ggn.ameba.post.widget.EndlessRecyclerOnScrollListener;
 
 public class ChatActivity extends BaseActivityG
@@ -51,12 +61,13 @@ public class ChatActivity extends BaseActivityG
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        OtherUserData = (RecentChatModel) getIntent().getSerializableExtra("data");
         settingActionBar();
 
 
         receiver = new Chat_BroadcastReceiver();
 
-        OtherUserData = (RecentChatModel) getIntent().getSerializableExtra("data");
 
         recyclerList = (RecyclerView) findViewById(R.id.recyclerList);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -88,10 +99,6 @@ public class ChatActivity extends BaseActivityG
                     {
                         // do something...
                         isLoading(true);
-
-//                    PageNumber = current_page;
-
-
                         getMsg(PageNumber + "");
                     }
 
@@ -111,12 +118,55 @@ public class ChatActivity extends BaseActivityG
 
     private void settingActionBar()
     {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Chat");
+        getSupportActionBar().setTitle(OtherUserData.getCustomerName());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.arrow_white);
+
+
+        try
+        {
+//            Drawable drawable = new ScaleDrawable(getResources().getDrawable(R.mipmap.ic_default_pic_rounded), Gravity.LEFT, 30, 30).getDrawable();
+//
+//            drawable.setBounds(30, 30, 30, 30);
+            Drawable dr     = getResources().getDrawable(R.mipmap.ic_default_pic_rounded);
+            Bitmap   bitmap = ((BitmapDrawable) dr).getBitmap();
+// Scale it to 50 x 50
+            Drawable d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 45, 45, true));
+
+            toolbar.setLogo(d);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        if (!OtherUserData.getPhotoPath().isEmpty())
+        {
+            Picasso.with(ChatActivity.this).load(OtherUserData.getPhotoPath()).resize(60, 60).transform(new CircleTransform()).centerInside().into(new Target()
+            {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
+                {
+                    toolbar.setLogo(new BitmapDrawable(getResources(), bitmap));
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable)
+                {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable)
+                {
+
+                }
+            });
+        }
+
     }
 
 
@@ -128,7 +178,7 @@ public class ChatActivity extends BaseActivityG
     }
 
 
-    SimpleDateFormat sdf = new SimpleDateFormat(DateUtilsG.G_FORMAT);
+    SimpleDateFormat sdf = new SimpleDateFormat(DateUtilsG.G_FORMAT, Locale.US);
 
     public void sendMsg(View view)
     {
@@ -235,7 +285,6 @@ public class ChatActivity extends BaseActivityG
 
     private void getUnread()
     {
-
         HashMap<String, String> input = new HashMap<>();
         input.put("CustomerIdBy", OtherUserData.getCustomerIdTo());
         input.put("CustomerIdTo", getLocaldata().getUserid());
@@ -257,7 +306,6 @@ public class ChatActivity extends BaseActivityG
                         }
 
                         JSONArray Jarray = mainobj.optJSONArray("Message");
-                        newMessagesCount = Jarray.length();
                         for (int i = 0; i < Jarray.length(); i++)
                         {
                             JSONObject innerobj = Jarray.optJSONObject(i);
@@ -316,8 +364,7 @@ public class ChatActivity extends BaseActivityG
                 execute();
     }
 
-    int newMessagesCount = 0;
-    int PageNumber       = 0;
+    int PageNumber = 0;
 
     private void getMsg(String pageNumber)
     {
@@ -342,8 +389,6 @@ public class ChatActivity extends BaseActivityG
                         }
 
                         JSONArray Jarray = mainobj.optJSONArray("Message");
-                        newMessagesCount = Jarray.length();
-
 
                         List<MsgDataModel> tempList = new ArrayList<MsgDataModel>();
 

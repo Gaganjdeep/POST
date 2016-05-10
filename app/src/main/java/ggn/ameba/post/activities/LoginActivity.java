@@ -148,6 +148,7 @@ public class LoginActivity extends BaseActivityG
                             sharedPrefHelper.setTagLine(jbojInner.getString("StatusLine"));
 
                             startActivity(new Intent(LoginActivity.this, HomeTabActivity.class));
+                            finish();
                         }
                         else
                         {
@@ -220,8 +221,6 @@ public class LoginActivity extends BaseActivityG
 //            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 //        }
 //    }
-
-
     public void reGister(View view)
     {
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));

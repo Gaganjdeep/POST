@@ -1,22 +1,19 @@
 package ggn.ameba.post.activities;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.transition.Explode;
+import android.transition.Transition;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.ScaleAnimation;
-import android.widget.LinearLayout;
+import android.view.Window;
 
 import ggn.ameba.post.R;
 import ggn.ameba.post.UtillsG.DateUtilsG;
-import ggn.ameba.post.activities.fragments.BaseFragmentG;
-import ggn.ameba.post.activities.fragments.HomeFragment;
 import ggn.ameba.post.activities.fragments.ImageDetailsFragment;
 import ggn.ameba.post.adapter.HomeModel;
 import ggn.ameba.post.widget.CountDownView;
@@ -33,7 +30,15 @@ public class ViewImageActivity extends BaseActivityG implements TimerListener
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(R.layout.activity_view_image);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            Explode explode = new Explode();
+            explode.setDuration(300);
+            getWindow().setEnterTransition(explode);
+        }
 
 
         countdownview = (CountDownView) findViewById(R.id.countdownview);
@@ -45,6 +50,7 @@ public class ViewImageActivity extends BaseActivityG implements TimerListener
         ImageDetailsFragment imageDetailsFragment = new ImageDetailsFragment();
         HomeModel            mhomeModel           = (HomeModel) getIntent().getSerializableExtra("data");
         imageDetailsFragment.setData(mhomeModel);
+
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, imageDetailsFragment).commit();
 
@@ -93,9 +99,9 @@ public class ViewImageActivity extends BaseActivityG implements TimerListener
     @Override
     public void timerElapsed()
     {
-//        countdownview.reset();
-//        countdownview.setInitialTime(30000); // Initial time of 30 seconds.
-//        countdownview.start();
+        countdownview.reset();
+        countdownview.setInitialTime(30000); // Initial time of 30 seconds.
+        countdownview.start();
     }
 
     public void hOme(View view)

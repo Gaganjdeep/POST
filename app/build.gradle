@@ -18,13 +18,23 @@ android {
 
         }
 
-        /*   def clientBuildDate = new Date().format('dd-MMM')
-        applicationVariants.all { variant ->
-            variant.outputs.each { output ->
+        /*  def clientBuildDate = new Date().format('dd-MMM')
+       applicationVariants.all { variant ->
+           variant.outputs.each { output ->
 
-                output.outputFile = new File(output.outputFile.parent,
-                        output.outputFile.name.replace("-debug", "-" + "Post " + clientBuildDate)
-                )
+               try
+               {
+                   output.outputFile = new File(output.outputFile.parent,
+                           output.outputFile.name.replace("-debug", "-" + "Post " + clientBuildDate)
+                   )
+               }
+               catch (Exception e)
+               {
+                   output.outputFile = new File(output.outputFile.parent,
+                           output.outputFile.name.replace(output.outputFile.name, "app-" + "Post " + clientBuildDate)
+                   )
+               }
+
             }
         }*/
 
@@ -41,8 +51,10 @@ dependencies {
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.android.support:recyclerview-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
-    compile 'com.naver.android.helloyako:imagecropview:1.0.5'
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    compile 'com.isseiaoki:simplecropview:1.1.4'
+
 }

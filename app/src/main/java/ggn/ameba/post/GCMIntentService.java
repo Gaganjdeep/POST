@@ -116,8 +116,6 @@ public class GCMIntentService extends GCMBaseIntentService
     @Override
     protected void onMessage(Context context, Intent intent)
     {
-
-
         try
         {
             bun = intent.getExtras();
@@ -133,10 +131,10 @@ public class GCMIntentService extends GCMBaseIntentService
                 notificationIntent = new Intent(context, ChatActivity.class);
                 RecentChatModel recentChatModel = new RecentChatModel();
                 recentChatModel.setCustomerIdTo(jobj.getString("CustomerIdBy"));
-                recentChatModel.setCustomerName("POST");
+                recentChatModel.setCustomerName(jobj.getString("UserName"));
                 recentChatModel.setChatContent("");
                 recentChatModel.setDateTimeCreated("");
-                recentChatModel.setPhotoPath(jobj.getString("ImagePath"));
+                recentChatModel.setPhotoPath(jobj.getString("PhotoPath"));
                 recentChatModel.setIsRead("");
 
                 notificationIntent.putExtra("data", recentChatModel);

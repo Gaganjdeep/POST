@@ -1,11 +1,15 @@
 package ggn.ameba.post.activities.fragments;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -52,6 +56,8 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
     }
 
 
+    private SwipeRefreshLayout refreshLayout;
+
     private ImageView imgSettings, imgMsg;
     private SearchView searchView;
     private TextView   tvPOST;
@@ -63,6 +69,9 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
     List<HomeModel> listHome;
 
 
+    int PAGE_NUMBER = 0;
+    EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -72,7 +81,7 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
 
 
         listHome = new ArrayList<>();
-
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
         tvPOST = (TextView) view.findViewById(R.id.tvPOST);
         tvPOST.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "fonts/Gnawhard.otf"));
 
@@ -95,41 +104,41 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
         homeAdapter = new HomeAdapter(getActivity(), listHome);
         recyclerview.setAdapter(homeAdapter);
 
-//        showData(0);
-        showData(0);
-        recyclerview.setOnScrollListener(new EndlessRecyclerOnScrollListener(mLayoutManager)
+
+        endlessRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener(mLayoutManager)
         {
             @Override
             public void onLoadMore(int current_page)
             {
-                // do something...
-
-                isLoading(true);
-
-                homeAdapter.count = 10 * current_page;
-                homeAdapter.notifyDataSetChanged();
-                System.out.println(current_page + "GGGGGGGGGGGG");
-
-                new Handler().postDelayed(new Runnable()
+                if (listHome.size() > 14)
                 {
-                    @Override
-                    public void run()
-                    {
-                        isLoading(false);
-                    }
-                }, 2000);
-
+                    showData(PAGE_NUMBER);
+                }
 
             }
-        });
+        };
+//        showData(0);
+        showData(0);
+        recyclerview.setOnScrollListener(endlessRecyclerOnScrollListener);
 
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+        {
+            @Override
+            public void onRefresh()
+            {
+                endlessRecyclerOnScrollListener.startOverStaggered();
+                PAGE_NUMBER = 0;
+                showData(0);
+            }
+        });
 
         return view;
     }
 
-
     private void isLoading(boolean isloading)
     {
+
         loading.setVisibility(isloading ? View.VISIBLE : View.GONE);
     }
 
@@ -138,17 +147,16 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
     StaggeredGridLayoutManager mLayoutManager;
 
 
-    private void showData(int pageNUmber)
+    private void showData(final int pageNUmber)
     {
-//        URL : http://112.196.34.42:8089/theme/GetThemePosts?ThemeID=38&PageNumber=0
-//        Method : GET
-//
-//                Response
-//        [{"ThemePostId":11, "ThemeID" : 38, "CustomerId" : 123, "ImagePath" : "path","HashTag" : "Pizza,Beer", "TagLocation" : "Chandigarh", "Latitude" : 32.00,
-//
-//            "Longitude" : 70.00, "CreatedDate": "2016-04-30T00:00:00" },{"ThemePostId":12, "ThemeID" : 38, "CustomerId" : 143, "ImagePath" : "path","HashTag" :
-//
-//        "Pizza,Beer", "TagLocation" : "Chandigarh", "Latitude" : 32.00, "Longitude" : 70.00, "CreatedDate": "2016-04-30T00:00:00" }]
+        if (pageNUmber == 0)
+        {
+            refreshLayout.setRefreshing(true);
+        }
+        else
+        {
+            isLoading(true);
+        }
 
         new SuperAsyncG(GlobalConstantsG.URL + "theme/GetThemePosts?ThemeID=" + getLocaldata().getThemeID() + "&PageNumber=" + pageNUmber, new HashMap<String, String>(), new CallBackG<String>()
         {
@@ -157,12 +165,29 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
             {
                 try
                 {
+                    if (pageNUmber == 0)
+                    {
+                        if (refreshLayout.isRefreshing())
+                        {
+                            refreshLayout.setRefreshing(false);
+                        }
+                    }
+                    else
+                    {
+                        isLoading(false);
+                    }
+
+
                     JSONObject jboj = new JSONObject(response);
 
                     if (jboj.getString(GlobalConstantsG.Status).equals(GlobalConstantsG.success))
                     {
                         JSONArray jsonArray = new JSONArray(jboj.getString(GlobalConstantsG.Message));
 
+                        if (pageNUmber == 0)
+                        {
+                            listHome.clear();
+                        }
 
                         for (int i = 0; i < jsonArray.length(); i++)
                         {
@@ -176,13 +201,13 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
 
                             listHome.add(homemodel);
                         }
-
+                        PAGE_NUMBER++;
                         homeAdapter.notifyDataSetChanged();
 
                     }
                     else
                     {
-                        UtillG.showToast(jboj.getString(GlobalConstantsG.Message), getActivity(), true);
+//                        UtillG.showToast(jboj.getString(GlobalConstantsG.Message), getActivity(), true);
                     }
 
                 }
@@ -229,4 +254,60 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
     {
         return false;
     }
+
+
+    boolean broadcastisnull = false;
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        if (!broadcastisnull)
+        {
+            if (receiver == null)
+            {
+                receiver = new Chat_BroadcastReceiver();
+            }
+
+            getActivity().registerReceiver(receiver, new IntentFilter(GlobalConstantsG.BROADCAST_UPDATE_HOME));
+            broadcastisnull = true;
+        }
+
+    }
+
+
+    @Override
+    public void onDestroy()
+    {
+        try
+        {
+            if (broadcastisnull)
+            {
+                getActivity().unregisterReceiver(receiver);
+                broadcastisnull = false;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        super.onDestroy();
+    }
+
+
+    Chat_BroadcastReceiver receiver;
+
+    private class Chat_BroadcastReceiver extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            endlessRecyclerOnScrollListener.startOverStaggered();
+            PAGE_NUMBER = 0;
+            showData(0);
+        }
+    }
+
+
 }

@@ -2,6 +2,7 @@ package ggn.ameba.post.activities.fragments;
 
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ import ggn.ameba.post.UtillsG.UtillG;
 import ggn.ameba.post.WebService.SuperAsyncG;
 import ggn.ameba.post.activities.ChatActivity;
 import ggn.ameba.post.activities.EditProfileActivity;
+import ggn.ameba.post.activities.OpenImageActivity;
 import ggn.ameba.post.adapter.HomeModel;
 import ggn.ameba.post.adapter.RecentChatModel;
 import ggn.ameba.post.widget.RoundedCornersGaganImg;
@@ -80,8 +82,24 @@ public class ImageDetailsFragment extends BaseFragmentG
         if (homeModel != null)
         {
             imgPost.setImageUrl(getActivity(), homeModel.getImagePath());
+            imgPost.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+//                    Intent intent = new Intent(getActivity(), OpenImageActivity.class);
+//                    intent.putExtra("image", homeModel.getImagePath());
+//                    startActivity(intent);
+
+                    Intent intent = new Intent(getActivity(), OpenImageActivity.class);
+                    intent.putExtra("image", homeModel.getImagePath());
+                    UtillG.transitionToActivity(getActivity(), intent, imgProfile, "image");
+
+                }
+            });
         }
     }
+
 
     private void showCompleteData(final ImageInfo imageInfo)
     {
@@ -146,6 +164,10 @@ public class ImageDetailsFragment extends BaseFragmentG
 
         img_eye = (ImageView) viewIdCard.findViewById(R.id.img_eye);
         imgedit = (ImageView) viewIdCard.findViewById(R.id.imgedit);
+
+
+        TextView tv = (TextView) viewIdCard.findViewById(R.id.tvPostId);
+        tv.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "fonts/Gnawhard.otf"));
     }
 
 

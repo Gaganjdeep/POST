@@ -1,9 +1,13 @@
 package ggn.ameba.post.UtillsG;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.view.Gravity;
 import android.view.View;
@@ -110,6 +114,25 @@ public class UtillG
         }
 
 
+    }
+
+
+    public static void transitionToActivity(Activity activity, Intent intent, View logo, String transitionName)
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        {
+            Intent i = intent;
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                    activity,
+                    android.util.Pair.create(logo, transitionName)
+            );
+            activity.startActivity(i, options.toBundle());
+
+        }
+        else
+        {
+            activity.startActivity(intent);
+        }
     }
 
 

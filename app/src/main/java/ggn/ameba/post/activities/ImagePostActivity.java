@@ -1,9 +1,8 @@
 package ggn.ameba.post.activities;
 
 import android.app.Dialog;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,9 +13,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.naver.android.helloyako.imagecrop.view.ImageCropView;
+import com.isseiaoki.simplecropview.CropImageView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.json.JSONObject;
 
@@ -43,16 +42,24 @@ public class ImagePostActivity extends CurrentLocActivityG
     @Override
     public void getCurrentLocationG(Location location)
     {
-        loc = location;
-
-        if (tvLocation != null)
+        try
         {
-            tvLocation.setText(UtillG.locationName(ImagePostActivity.this, new LatLng(location.getLatitude(), location.getLongitude())));
+            loc = location;
+
+            if (tvLocation != null)
+            {
+                tvLocation.setText(UtillG.locationName(ImagePostActivity.this, new LatLng(location.getLatitude(), location.getLongitude())));
+            }
         }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
 
     }
 
-    ImageCropView imgView;
+    CropImageView imgView;
 
 
     Uri imageUri;
@@ -88,12 +95,15 @@ public class ImagePostActivity extends CurrentLocActivityG
         settingActionBar();
 
 
-        imgView = (ImageCropView) findViewById(R.id.imgView);
-        imgView.setAspectRatio(3, 2);
+        imgView = (CropImageView) findViewById(R.id.imgView);
+        imgView.setCropMode(CropImageView.CropMode.RATIO_4_3);
+        imgView.setCustomRatio(4,3);
+//        imgView.setAspectRatio(1, 1);
+
 
         tvLocation = (TextView) findViewById(R.id.tvLocation);
 
-        imgView.setScaleEnabled(true);
+//        imgView.setScaleEnabled(true);
 
 
 //        if (imageUri.toString().contains("file://"))
@@ -118,8 +128,33 @@ public class ImagePostActivity extends CurrentLocActivityG
 //            e.printStackTrace();
 //        }
 
-
         Picasso.with(this).load(imageUri)
+                .centerInside()
+                .resize(640, 400)
+                .into(imgView, new Callback()
+                {
+                    @Override
+                    public void onSuccess()
+                    {
+                        imgView.post(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                imgView.setImageBitmap(((BitmapDrawable) imgView.getDrawable()).getBitmap());
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void onError()
+                    {
+
+                    }
+                });
+     /*   Picasso.with(this).load(imageUri)
                 .centerInside()
                 .resize(640, 400)
                 .into(new Target()
@@ -141,10 +176,26 @@ public class ImagePostActivity extends CurrentLocActivityG
                     {
 
                     }
-                });
+                });*/
 
 
     }
+
+
+//    private boolean isPossibleCrop(int widthRatio, int heightRatio)
+//    {
+//        int bitmapWidth  = imgView.getViewBitmap().getWidth();
+//        int bitmapHeight = imgView.getViewBitmap().getHeight();
+//        if (bitmapWidth < widthRatio && bitmapHeight < heightRatio)
+//        {
+//            return false;
+//        }
+//        else
+//        {
+//            return true;
+//        }
+//    }
+
 
     private void settingActionBar()
     {
@@ -193,7 +244,7 @@ public class ImagePostActivity extends CurrentLocActivityG
         {
 
 //            base64 = BitmapDecoderG.getBytesImageBitmap(ImagePostActivity.this, ((BitmapDrawable) imgView.getDrawable()).getBitmap());
-            base64 = BitmapDecoderG.getBytesImageBitmap(ImagePostActivity.this, imgView.getCroppedImage());
+            base64 = BitmapDecoderG.getBytesImageBitmap(ImagePostActivity.this, imgView.getCroppedBitmap());
         }
         catch (Exception e)
         {
@@ -239,11 +290,13 @@ public class ImagePostActivity extends CurrentLocActivityG
                 {
                     cancelProgress();
 
-                    ;
                     JSONObject jboj = new JSONObject(response);
 
                     if (jboj.getString(GlobalConstantsG.Status).equals(GlobalConstantsG.success))
                     {
+                        Intent updateUnreadmsg = new Intent(GlobalConstantsG.BROADCAST_UPDATE_HOME);
+                        sendBroadcast(updateUnreadmsg);
+
                         UtillG.showToast("Image posted successfully", ImagePostActivity.this, true);
                         finish();
                     }

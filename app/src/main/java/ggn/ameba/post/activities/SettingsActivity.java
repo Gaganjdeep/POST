@@ -1,24 +1,19 @@
 package ggn.ameba.post.activities;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
 import ggn.ameba.post.R;
 import ggn.ameba.post.UtillsG.CallBackG;
 import ggn.ameba.post.UtillsG.GlobalConstantsG;
-import ggn.ameba.post.UtillsG.SharedPrefHelper;
 import ggn.ameba.post.UtillsG.UtillG;
 import ggn.ameba.post.WebService.SuperAsyncG;
 import ggn.ameba.post.widget.RoundedCornersGaganImg;
@@ -39,35 +34,12 @@ public class SettingsActivity extends BaseActivityG
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-
     }
-
-
-    public static void transitionToActivity(Activity activity, Class target, View logo, String transitionName)
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-        {
-            Intent i = new Intent(activity, target);
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-                    activity,
-                    android.util.Pair.create(logo, transitionName)
-            );
-            activity.startActivity(i, options.toBundle());
-
-        }
-        else
-        {
-            activity.startActivity(new Intent(activity, target));
-        }
-    }
-
 
     @Override
     protected void onResume()
     {
         showIDcard();
-
         super.onResume();
     }
 
@@ -90,7 +62,8 @@ public class SettingsActivity extends BaseActivityG
         tvEmail.setVisibility(View.VISIBLE);
         tvEmail.setText(getLocaldata().getEmail());
 
-
+        TextView tv = (TextView) viewIdCard.findViewById(R.id.tvPostId);
+        tv.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "fonts/Gnawhard.otf"));
         img_eye = (ImageView) viewIdCard.findViewById(R.id.img_eye);
         img_eye.setVisibility(View.INVISIBLE);
         imgedit = (ImageView) viewIdCard.findViewById(R.id.imgedit);
@@ -102,7 +75,8 @@ public class SettingsActivity extends BaseActivityG
             {
 //                startActivity(new Intent(SettingsActivity.this, EditProfileActivity.class));
 
-                transitionToActivity(SettingsActivity.this, EditProfileActivity.class, imgProfile, "img");
+
+               UtillG. transitionToActivity(SettingsActivity.this, new Intent(SettingsActivity.this,EditProfileActivity.class), imgProfile, "img");
             }
         });
     }

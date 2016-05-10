@@ -1,5 +1,6 @@
 package ggn.ameba.post.activities;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -55,7 +56,8 @@ public class ViewPostActivity extends BaseActivityG
         tvStatusLine = (TextView) viewIdCard.findViewById(R.id.tvStatusLine);
         tvStatusLine.setVisibility(View.VISIBLE);
         tvStatusLine.setText(getLocaldata().getTagLine());
-
+        TextView tv = (TextView) viewIdCard.findViewById(R.id.tvPostId);
+        tv.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "fonts/Gnawhard.otf"));
 
         tvEmail = (TextView) viewIdCard.findViewById(R.id.tvEmail);
         tvEmail.setText(getLocaldata().getEmail());

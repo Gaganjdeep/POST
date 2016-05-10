@@ -29,5 +29,6 @@ public class GlobalConstantsG
 
 
     public static final String BROADCAST_GETUNREAD = "ggn.post.get_unread";
+    public static final String BROADCAST_UPDATE_HOME = "ggn.post.update_home";
 
 }

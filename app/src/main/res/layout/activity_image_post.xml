@@ -33,19 +33,105 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.naver.android.helloyako.imagecrop.view.ImageCropView
+                <!-- <com.naver.android.helloyako.imagecrop.view.ImageCropView
+                     android:id="@+id/imgView"
+                     android:layout_width="match_parent"
+                     android:layout_height="250dp"
+                     android:src="@drawable/default_grey"
+                     imagecrop:gridInnerColor="#66ffffff"
+                     imagecrop:gridInnerStroke="1dp"
+                     imagecrop:gridOuterColor="#ffffff"
+                     imagecrop:gridOuterStroke="1dp"
+                     imagecrop:setInnerGridMode="on"
+                     imagecrop:setOuterGridMode="on"
+                     />-->
+
+
+                <com.isseiaoki.simplecropview.CropImageView
                     android:id="@+id/imgView"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    xmlns:custom="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:src="@drawable/default_grey"
-                    imagecrop:gridInnerColor="#66ffffff"
-                    imagecrop:gridInnerStroke="1dp"
-                    imagecrop:gridOuterColor="#ffffff"
-                    imagecrop:gridOuterStroke="1dp"
-                    imagecrop:setInnerGridMode="on"
-                    imagecrop:setOuterGridMode="on"
-                    />
+                    custom:scv_animation_duration="200"
+                    custom:scv_animation_enabled="true"
+                    custom:scv_crop_enabled="true"
+                    custom:scv_crop_mode="free"
+                    custom:scv_frame_color="@color/colorAccent"
+                    custom:scv_frame_stroke_weight="1dp"
+                    custom:scv_guide_color="@color/colorAccent"
+                    custom:scv_guide_show_mode="show_always"
+                    custom:scv_guide_stroke_weight="1dp"
+                    custom:scv_handle_color="@color/colorAccent"
+                    custom:scv_handle_shadow_enabled="true"
+                    custom:scv_handle_show_mode="show_always"
+                    custom:scv_handle_size="9dp"
+                    custom:scv_initial_frame_scale="1.0"
+                    custom:scv_min_frame_size="50dp"
+                    custom:scv_overlay_color="#a9000000"
+                    custom:scv_touch_padding="8dp"/>
+
+
             </FrameLayout>
+
+
+            <!--<LinearLayout
+                android:id="@+id/layoutAspectBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Crop Ratio-"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/ratio11btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/stroke_selector"
+                    android:padding="10dp"
+                    android:text="1:1"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/ratio34btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:padding="10dp"
+                    android:text="3:4"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/ratio43btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:padding="10dp"
+                    android:text="4:3"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/ratio23btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:padding="10dp"
+                    android:text="2:3"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>-->
+
 
             <TextView
                 android:id="@+id/tvLocation"
@@ -60,6 +146,7 @@
                 android:textSize="16sp"/>
 
             <EditText
+
                 android:id="@+id/edHashTag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
