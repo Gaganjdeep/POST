@@ -112,8 +112,6 @@ public class LoginActivity extends BaseActivityG
 
             showProgress();
 
-
-//            {EmailID : "acb@gmail.com", Password : "123456"}
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("EmailId", mEmailView.getText().toString().trim());
             hashMap.put("Password", mPasswordView.getText().toString().trim());
@@ -125,10 +123,6 @@ public class LoginActivity extends BaseActivityG
                 @Override
                 public void callBack(String response)
                 {
-
-//                    showProgress(false);
-                    System.out.println(response);
-
                     cancelProgress();
 
                     try
@@ -158,6 +152,7 @@ public class LoginActivity extends BaseActivityG
                     }
                     catch (Exception e)
                     {
+                        cancelProgress();
                         e.printStackTrace();
                     }
                 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
@@ -12,7 +13,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -88,7 +93,7 @@ public class ChatActivity extends BaseActivityG
         getMsg(PageNumber + "");
 
 
-        recyclerList.setOnScrollListener(new EndlessRecyclerOnScrollListener(layout)
+        endlessRecyclerOnScrollListener = new EndlessRecyclerOnScrollListener(layout)
         {
             @Override
             public void onLoadMore(int current_page)
@@ -107,9 +112,184 @@ public class ChatActivity extends BaseActivityG
 
 
             }
-        });
+        };
+
+        recyclerList.setOnScrollListener(endlessRecyclerOnScrollListener);
 
 
+    }
+
+    private EndlessRecyclerOnScrollListener endlessRecyclerOnScrollListener;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.clear_chat_menu, menu);
+
+        MenuItem        item = menu.getItem(0);
+        SpannableString s    = new SpannableString("Clear Chat");
+        s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s.length(), 0);
+        item.setTitle(s);
+
+
+        MenuItem        item2 = menu.getItem(1);
+        SpannableString s2    = new SpannableString("Block User");
+        s2.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s2.length(), 0);
+        item2.setTitle(s2);
+
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+
+        if (item.getItemId() == R.id.clear)
+        {
+
+//    URL: ttp://112.196.34.42:8089/Chat/ClearAllChat
+//
+//    Method:Post
+//
+//    Header : Content-Type: application/json
+//
+//    Body-
+//    {"CustomerIdBy":267,"CustomerIdTo":264}
+//
+//    Result/Output:
+//
+//    {"Status":"success","Message":"Chat is deleted successfully."}
+//    or
+//    {"Status":"error","Message":"Chat is not deleted."}
+
+            View.OnClickListener onClickListener = new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+
+                    UtillG.global_dialog.dismiss();
+
+
+                    showProgress();
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("CustomerIdBy", getLocaldata().getUserid());
+                    hashMap.put("CustomerIdTo", OtherUserData.getCustomerIdTo());
+
+                    new SuperAsyncG(GlobalConstantsG.URL + "Chat/ClearAllChat", hashMap, new CallBackG<String>()
+                    {
+                        @Override
+                        public void callBack(String response)
+                        {
+                            try
+                            {
+                                cancelProgress();
+
+                                JSONObject jboj = new JSONObject(response);
+
+                                if (jboj.getString(GlobalConstantsG.Status).equals(GlobalConstantsG.success))
+                                {
+
+                                    listData.clear();
+                                    chatMsgAdapter.notifyDataSetChanged();
+                                    endlessRecyclerOnScrollListener.startOverStaggered();
+
+                                    UtillG.showToast("Chat deleted.", ChatActivity.this, true);
+                                }
+                                else
+                                {
+                                    UtillG.showToast(jboj.getString(GlobalConstantsG.Message), ChatActivity.this, true);
+                                }
+
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }).execute();
+                }
+            };
+
+
+            if (listData.isEmpty())
+            {
+                UtillG.showToast("No Chat to clear !", ChatActivity.this, true);
+            }
+            else
+            {
+                UtillG.show_dialog_msg(ChatActivity.this, "Are you sure,You want to clear chat ?", onClickListener);
+            }
+
+
+        }
+        else if (item.getItemId() == R.id.block)
+        {
+            View.OnClickListener onClickListener = new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+
+                    UtillG.global_dialog.dismiss();
+
+
+                    showProgress();
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("CustomerIdBy", getLocaldata().getUserid());
+                    hashMap.put("CustomerIdTo", OtherUserData.getCustomerIdTo());
+                    hashMap.put("IsBlocked", "1");
+
+
+                    new SuperAsyncG(GlobalConstantsG.URL + "Customer/SaveBlockUnblock", hashMap, new CallBackG<String>()
+                    {
+                        @Override
+                        public void callBack(String response)
+                        {
+                            try
+                            {
+                                cancelProgress();
+
+                                JSONObject jboj = new JSONObject(response);
+
+                                if (jboj.getString(GlobalConstantsG.Status).equals(GlobalConstantsG.success))
+                                {
+                                    UtillG.showToast("User Blocked.", ChatActivity.this, true);
+                                    finish();
+                                }
+                                else
+                                {
+                                    UtillG.showToast(jboj.getString(GlobalConstantsG.Message), ChatActivity.this, true);
+                                }
+
+                            }
+                            catch (Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }).execute();
+                }
+            };
+
+
+            UtillG.show_dialog_msg(ChatActivity.this, "You want to block " + OtherUserData.getCustomerName() + " ?", onClickListener);
+
+
+        }
+        else
+        {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -145,7 +325,7 @@ public class ChatActivity extends BaseActivityG
 
         if (!OtherUserData.getPhotoPath().isEmpty())
         {
-            Picasso.with(ChatActivity.this).load(OtherUserData.getPhotoPath()).resize(60, 60).transform(new CircleTransform()).centerInside().into(new Target()
+            Picasso.with(ChatActivity.this).load(OtherUserData.getPhotoPath()).resize(60, 60).transform(new CircleTransform()).centerInside().priority(Picasso.Priority.HIGH).into(new Target()
             {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
@@ -167,14 +347,6 @@ public class ChatActivity extends BaseActivityG
             });
         }
 
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        finish();
-        return super.onOptionsItemSelected(item);
     }
 
 

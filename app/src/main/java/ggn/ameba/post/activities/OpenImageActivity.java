@@ -26,7 +26,7 @@ public class OpenImageActivity extends Activity
 
         imgView = (ImageView) findViewById(R.id.imgView);
 
-        Picasso.with(OpenImageActivity.this).load(url).priority(Picasso.Priority.HIGH).fit().into(imgView);
+        Picasso.with(OpenImageActivity.this).load(url).priority(Picasso.Priority.HIGH).centerInside().resize(640, 400).into(imgView);
 
 
     }

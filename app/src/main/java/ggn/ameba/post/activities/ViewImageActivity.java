@@ -1,14 +1,11 @@
 package ggn.ameba.post.activities;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.transition.Explode;
-import android.transition.Transition;
 import android.view.View;
 import android.view.Window;
 

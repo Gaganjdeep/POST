@@ -75,7 +75,7 @@ public class BitmapDecoderG
         {
             Bitmap                bm   = imageUri;
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bm.compress(Bitmap.CompressFormat.JPEG, 70, baos); //bm is the bitmap object
+            bm.compress(Bitmap.CompressFormat.JPEG, 90, baos); //bm is the bitmap object
             byte[] b = baos.toByteArray();
             return Base64.encodeToString(b, Base64.DEFAULT);
 
@@ -88,7 +88,7 @@ public class BitmapDecoderG
             {
                 Bitmap                bm   = imageUri;
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bm.compress(Bitmap.CompressFormat.JPEG, 50, baos); //bm is the bitmap object
+                bm.compress(Bitmap.CompressFormat.JPEG, 60, baos); //bm is the bitmap object
                 byte[] b = baos.toByteArray();
                 return Base64.encodeToString(b, Base64.DEFAULT);
             }

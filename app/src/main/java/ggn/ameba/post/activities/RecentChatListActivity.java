@@ -25,7 +25,7 @@ import ggn.ameba.post.adapter.RecentChatModel;
 
 public class RecentChatListActivity extends BaseActivityG
 {
-    RecyclerView recyclerList;
+  private  RecyclerView recyclerList;
 
 
     List<RecentChatModel> listData;

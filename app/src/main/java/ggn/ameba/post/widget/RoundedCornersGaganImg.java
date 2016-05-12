@@ -156,7 +156,8 @@ public class RoundedCornersGaganImg extends ImageView
         {
 
             Picasso.with(con).load(URL)
-                    .fit()
+                    .resize(450, 450)
+                    .centerInside()
                     .placeholder(R.drawable.default_grey)
                     .error(R.drawable.default_grey)
                     .into(RoundedCornersGaganImg.this);

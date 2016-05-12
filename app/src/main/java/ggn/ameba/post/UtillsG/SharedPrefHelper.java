@@ -155,7 +155,7 @@ public class SharedPrefHelper
 
     public String getThemeEndDate()
     {
-        return sharedPreferences.getString("ThemeEndDate", "2016-05-10T16:47:00");
+        return sharedPreferences.getString("ThemeEndDate", "2016-05-20T16:47:00");
     }
 
 

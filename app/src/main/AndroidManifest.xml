@@ -47,7 +47,8 @@
         </activity>
         <activity
             android:name=".activities.SplashActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -105,8 +106,10 @@
         <activity android:name=".activities.ThemeInfoActivtiy">
         </activity>
         <activity
-            android:theme="@style/Theme_Dialog"
-            android:name=".activities.OpenImageActivity">
+            android:name=".activities.OpenImageActivity"
+            android:theme="@style/Theme_Dialog">
+        </activity>
+        <activity android:name=".activities.BlockListActivity">
         </activity>
     </application>
 

@@ -1,9 +1,10 @@
 package ggn.ameba.post.activities.fragments;
 
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,9 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.plus.model.people.Person;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -28,7 +27,9 @@ import ggn.ameba.post.WebService.SuperAsyncG;
 import ggn.ameba.post.activities.ChatActivity;
 import ggn.ameba.post.activities.EditProfileActivity;
 import ggn.ameba.post.activities.OpenImageActivity;
+import ggn.ameba.post.activities.ViewPostActivity;
 import ggn.ameba.post.adapter.HomeModel;
+import ggn.ameba.post.adapter.IdCardModel;
 import ggn.ameba.post.adapter.RecentChatModel;
 import ggn.ameba.post.widget.RoundedCornersGaganImg;
 
@@ -45,7 +46,7 @@ public class ImageDetailsFragment extends BaseFragmentG
     }
 
 
-    private ImageView              imgShare;
+    private ImageView imgShare, imgLike;
     private RoundedCornersGaganImg imgPost;
     private TextView               tvLocation, tvViewCount;
 
@@ -68,12 +69,26 @@ public class ImageDetailsFragment extends BaseFragmentG
     private void findViewByID(View view)
     {
         imgShare = (ImageView) view.findViewById(R.id.imgShare);
+        imgLike = (ImageView) view.findViewById(R.id.imgLike);
         imgPost = (RoundedCornersGaganImg) view.findViewById(R.id.imgPost);
         tvLocation = (TextView) view.findViewById(R.id.tvLocation);
         tvViewCount = (TextView) view.findViewById(R.id.tvViewCount);
         viewIdCard = view.findViewById(R.id.viewIdCard);
 
         showIDcard();
+
+
+        imgLike.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+                UtillG.ShowToastImage(getActivity(), R.drawable.vector_heart);
+
+
+            }
+        });
     }
 
 
@@ -90,7 +105,6 @@ public class ImageDetailsFragment extends BaseFragmentG
 //                    Intent intent = new Intent(getActivity(), OpenImageActivity.class);
 //                    intent.putExtra("image", homeModel.getImagePath());
 //                    startActivity(intent);
-
                     Intent intent = new Intent(getActivity(), OpenImageActivity.class);
                     intent.putExtra("image", homeModel.getImagePath());
                     UtillG.transitionToActivity(getActivity(), intent, imgProfile, "image");
@@ -140,15 +154,19 @@ public class ImageDetailsFragment extends BaseFragmentG
         });
 
 
+        idCardModel = new IdCardModel(imageInfo.getPhotoPath(), imageInfo.getCustomerName(), imageInfo.getEmailId(), imageInfo.getStatusLine(), imageInfo.getHomeModel().getCustomerId());
+
+
     }
 
-    ImageView imgedit, img_eye;
+    private ImageView imgedit, img_eye;
 
-    RoundedCornersGaganImg imgProfile;
-    TextView               tvName, tvEmail, tvStatusLine;
+    private RoundedCornersGaganImg imgProfile;
+    private TextView               tvName, tvEmail, tvStatusLine;
 
-    View viewIdCard;
+    private View viewIdCard;
 
+    private IdCardModel idCardModel;
 
     private void showIDcard()
     {
@@ -168,6 +186,24 @@ public class ImageDetailsFragment extends BaseFragmentG
 
         TextView tv = (TextView) viewIdCard.findViewById(R.id.tvPostId);
         tv.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "fonts/Gnawhard.otf"));
+
+
+        img_eye.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+                if (idCardModel != null)
+                {
+                    Intent intent = new Intent(getActivity(), ViewPostActivity.class);
+                    intent.putExtra("data", idCardModel);
+                    startActivity(intent);
+                }
+            }
+        });
+
+
     }
 
 
@@ -198,20 +234,6 @@ public class ImageDetailsFragment extends BaseFragmentG
 
                     if (jboj.getString(GlobalConstantsG.Status).equals(GlobalConstantsG.success))
                     {
-//                        "ThemePostId": ​9,
-//                            "ThemeID": ​38,
-//                            "CustomerId": ​584,
-//                            "ImagePath": "http://112.196.34.42:8089/ThemePhoto/75f49665-c275-4969-aa42-473eedae81b0.png",
-//                            "HashTag": null,
-//                            "TagLocation": null,
-//                            "Latitude": null,
-//                            "Longitude": null,
-//                            "CreatedDate": "2016-04-28T15:43:36.717",
-//                            "ViewCount": ​0,
-//                            "CustomerName": "yo",
-//                            "PhotoPath": "http://112.196.34.42:8089/CustomerPhoto/70fec7eb-9e0d-460f-9261-d28a847cac79.png",
-//                            "EmailId": "yo@yo.com"
-
                         ImageInfo imageInfo = new ImageInfo();
 
                         JSONObject jInner = new JSONObject(jboj.getString(GlobalConstantsG.Message));

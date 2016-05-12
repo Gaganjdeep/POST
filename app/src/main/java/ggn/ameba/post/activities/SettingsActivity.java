@@ -16,6 +16,7 @@ import ggn.ameba.post.UtillsG.CallBackG;
 import ggn.ameba.post.UtillsG.GlobalConstantsG;
 import ggn.ameba.post.UtillsG.UtillG;
 import ggn.ameba.post.WebService.SuperAsyncG;
+import ggn.ameba.post.adapter.IdCardModel;
 import ggn.ameba.post.widget.RoundedCornersGaganImg;
 
 public class SettingsActivity extends BaseActivityG
@@ -28,6 +29,9 @@ public class SettingsActivity extends BaseActivityG
     private TextView               tvName, tvEmail, tvStatusLine;
 
     private View viewIdCard;
+
+
+    private IdCardModel idCardModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,7 +80,7 @@ public class SettingsActivity extends BaseActivityG
 //                startActivity(new Intent(SettingsActivity.this, EditProfileActivity.class));
 
 
-               UtillG. transitionToActivity(SettingsActivity.this, new Intent(SettingsActivity.this,EditProfileActivity.class), imgProfile, "img");
+                UtillG.transitionToActivity(SettingsActivity.this, new Intent(SettingsActivity.this, EditProfileActivity.class), imgProfile, "img");
             }
         });
     }
@@ -89,7 +93,11 @@ public class SettingsActivity extends BaseActivityG
 
     public void viewPost(View view)
     {
-        startActivity(new Intent(SettingsActivity.this, ViewPostActivity.class));
+
+        idCardModel = new IdCardModel(getLocaldata().getPhotoUrl(), getLocaldata().getName(), getLocaldata().getEmail(), getLocaldata().getTagLine(), getLocaldata().getUserid());
+        Intent intent = new Intent(SettingsActivity.this, ViewPostActivity.class);
+        intent.putExtra("data", idCardModel);
+        startActivity(intent);
     }
 
     public void logOut(View view)
@@ -148,5 +156,11 @@ public class SettingsActivity extends BaseActivityG
 
             }
         });
+    }
+
+    public void blockList(View view)
+    {
+        Intent i = new Intent(SettingsActivity.this, BlockListActivity.class);
+        startActivity(i);
     }
 }
