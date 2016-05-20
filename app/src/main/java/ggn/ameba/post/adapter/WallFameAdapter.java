@@ -5,22 +5,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
 import ggn.ameba.post.R;
+import ggn.ameba.post.widget.RoundedCornersGaganImg;
 
 /**
  * Created by gagandeep on 19 Apr 2016.
  */
 public class WallFameAdapter extends RecyclerView.Adapter<WallFameAdapter.HomeViewHolders>
 {
-    private List<String> itemList;
-    private Context      context;
+    private List<WallOfFameModel> itemList;
+    private Context               context;
 
-    public WallFameAdapter(Context context, List<String> itemList)
+    public WallFameAdapter(Context context, List<WallOfFameModel> itemList)
     {
         this.itemList = itemList;
         this.context = context;
@@ -39,37 +40,57 @@ public class WallFameAdapter extends RecyclerView.Adapter<WallFameAdapter.HomeVi
     public void onBindViewHolder(final HomeViewHolders holder, int position)
     {
 
+        WallOfFameModel currentData = itemList.get(position);
+
+
+        holder.tvThemeName.setText("Theme : " + currentData.getThemeName());
+
+
+        if (!currentData.getWallFamePhoto().isEmpty())
+        {
+            holder.layoutNoImage.setVisibility(View.GONE);
+            holder.imgVpost.setImageUrl(context, currentData.getWallFamePhoto());
+        }
+        else
+        {
+            holder.layoutNoImage.setVisibility(View.VISIBLE);
+            holder.imgVpost.setVisibility(View.GONE);
+
+
+
+            holder.tvdate.setText(currentData.getThemeEndDate());
+
+        }
 
     }
 
     @Override
     public int getItemCount()
     {
-        return 20;
+        return itemList.size();
     }
 
 
-    public class HomeViewHolders extends RecyclerView.ViewHolder implements
-            View.OnClickListener
+    public class HomeViewHolders extends RecyclerView.ViewHolder
     {
-        public ImageView imgVpost;
+        public RoundedCornersGaganImg imgVpost;
+
+        public TextView tvThemeName,tvdate;
+
+        LinearLayout layoutNoImage;
 
 
         public HomeViewHolders(View itemView)
         {
             super(itemView);
-            itemView.setOnClickListener(this);
-            imgVpost = (ImageView) itemView.findViewById(R.id.imgVpost);
+            imgVpost = (RoundedCornersGaganImg) itemView.findViewById(R.id.imgVpost);
 
+            tvThemeName = (TextView) itemView.findViewById(R.id.tvThemeName);
+            tvdate = (TextView) itemView.findViewById(R.id.tvdate);
+            layoutNoImage = (LinearLayout) itemView.findViewById(R.id.layoutNoImage);
         }
 
-        @Override
-        public void onClick(View view)
-        {
-//            Toast.makeText(view.getContext(),
-//                    "Clicked Position = " + getPosition(), Toast.LENGTH_SHORT)
-//                    .show();
-        }
+
     }
 
 

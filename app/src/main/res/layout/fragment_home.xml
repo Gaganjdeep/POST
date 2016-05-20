@@ -17,6 +17,7 @@
 
 
         <TextView
+            android:maxLines="1"
             android:id="@+id/tvPOST"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -32,9 +32,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         this.context = context;
     }
 
-    public int count = 10;
-
-
     @Override
     public HomeViewHolders onCreateViewHolder(ViewGroup parent, int viewType)
     {
@@ -53,15 +50,15 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         if (position == 0 || (Integer) holder.view.getTag() % 7 == 0)
         {
 
-            holder.imgVpost.setImageResource(R.drawable.food);
+            holder.imgVpost.setImageResource(R.drawable.default_grey);
             int                       height = 304;
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(height, height);
             holder.imgVpost.setLayoutParams(params);
         }
         else
         {
-            holder.imgVpost.setImageResource(R.drawable.food_demo_img);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, 150);
+            holder.imgVpost.setImageResource(R.drawable.default_grey);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 150);
             holder.imgVpost.setLayoutParams(params);
         }
 

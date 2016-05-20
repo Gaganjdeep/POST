@@ -123,6 +123,13 @@ public class GCMIntentService extends GCMBaseIntentService
             JSONObject jobj       = new JSONObject(jsonString);
             String     flag       = jobj.getString("flag");
             Intent     notificationIntent;
+
+
+            //TODO : flags added for GCM notifications.
+            //            AdminMessage
+            //            NewChatMessage
+
+
             if (flag.equals("NewChatMessage"))
             {
                 Intent updateUnreadmsg = new Intent(GlobalConstantsG.BROADCAST_GETUNREAD);

@@ -246,7 +246,7 @@ public class ChatActivity extends BaseActivityG
                     hashMap.put("IsBlocked", "1");
 
 
-                    new SuperAsyncG(GlobalConstantsG.URL + "Customer/SaveBlockUnblock", hashMap, new CallBackG<String>()
+                    new SuperAsyncG(GlobalConstantsG.URL + "Customer/SaveBlockUnblock", hashMap,  new CallBackG<String>()
                     {
                         @Override
                         public void callBack(String response)

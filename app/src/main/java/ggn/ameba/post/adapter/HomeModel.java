@@ -8,7 +8,18 @@ import java.io.Serializable;
 public class HomeModel implements Serializable
 {
 
-    private String ThemePostId,CustomerId,ImagePath,CreatedDate;
+    private String ThemePostId,CustomerId,ImagePath,CreatedDate,ThemeId;
+
+
+    public String getThemeId()
+    {
+        return ThemeId;
+    }
+
+    public void setThemeId(String themeId)
+    {
+        ThemeId = themeId;
+    }
 
     public String getThemePostId()
     {

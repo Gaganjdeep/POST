@@ -16,6 +16,7 @@ import ggn.ameba.post.UtillsG.GlobalConstantsG;
 import ggn.ameba.post.UtillsG.SharedPrefHelper;
 import ggn.ameba.post.UtillsG.UtillG;
 import ggn.ameba.post.WebService.SuperAsyncG;
+import ggn.ameba.post.widget.TimerService;
 
 public class SplashActivity extends BaseActivityG
 {
@@ -26,22 +27,27 @@ public class SplashActivity extends BaseActivityG
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        new Handler().postDelayed(new Runnable()
+//        new Handler().postDelayed(new Runnable()
+//        {
+//            @Override
+//            public void run()
+//            {
+//                if (getLocaldata().getUserid().equals(""))
+//                {
+//                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+//                }
+//                else
+//                {
+//                    startActivity(new Intent(SplashActivity.this, HomeTabActivity.class));
+//                }
+        updateThemeInfo();
+        if (UtillG.isMyServiceRunning(TimerService.class, SplashActivity.this))
         {
-            @Override
-            public void run()
-            {
-                if (getLocaldata().getUserid().equals(""))
-                {
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                }
-                else
-                {
-                    startActivity(new Intent(SplashActivity.this, HomeTabActivity.class));
-                }
-//                updateThemeInfo();
-            }
-        }, 1000);
+            stopService(new Intent(SplashActivity.this, TimerService.class));
+        }
+
+//            }
+//        }, 1000);
 
 
     }
@@ -67,6 +73,9 @@ public class SplashActivity extends BaseActivityG
                         sharedPrefHelper.setThemeOverview(jbojInner.getString("Overview"));
                         sharedPrefHelper.setThemeEndDate(jbojInner.getString("ThemeEndDate"));
                         sharedPrefHelper.setThemeStartDate(jbojInner.getString("ThemeStartDate"));
+
+                        sharedPrefHelper.setThemeID(jbojInner.getString("ThemeID"));
+                        sharedPrefHelper.setMarqueeText(jbojInner.getString("MarqueeText"));
 
                         if (getLocaldata().getUserid().equals(""))
                         {

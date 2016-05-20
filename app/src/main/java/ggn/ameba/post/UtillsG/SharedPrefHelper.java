@@ -117,6 +117,17 @@ public class SharedPrefHelper
         return sharedPreferences.getString("ThemeID", "38");
     }
 
+    public void setMarqueeText(String MarqueeText)
+    {
+        edit.putString("MarqueeText", MarqueeText);
+        edit.apply();
+    }
+
+    public String getMarqueeText()
+    {
+        return sharedPreferences.getString("MarqueeText", "");
+    }
+
     public void setThemeName(String ThemeName)
     {
         edit.putString("ThemeName", ThemeName);

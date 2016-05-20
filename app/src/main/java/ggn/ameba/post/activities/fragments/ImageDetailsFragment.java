@@ -1,8 +1,6 @@
 package ggn.ameba.post.activities.fragments;
 
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -24,8 +22,9 @@ import ggn.ameba.post.UtillsG.CallBackG;
 import ggn.ameba.post.UtillsG.GlobalConstantsG;
 import ggn.ameba.post.UtillsG.UtillG;
 import ggn.ameba.post.WebService.SuperAsyncG;
+import ggn.ameba.post.activities.BlockListActivity;
 import ggn.ameba.post.activities.ChatActivity;
-import ggn.ameba.post.activities.EditProfileActivity;
+import ggn.ameba.post.activities.CommentsListActivity;
 import ggn.ameba.post.activities.OpenImageActivity;
 import ggn.ameba.post.activities.ViewPostActivity;
 import ggn.ameba.post.adapter.HomeModel;
@@ -48,7 +47,7 @@ public class ImageDetailsFragment extends BaseFragmentG
 
     private ImageView imgShare, imgLike;
     private RoundedCornersGaganImg imgPost;
-    private TextView               tvLocation, tvViewCount;
+    private TextView               tvLocation, tvViewCount, tvLikeCount, tvCommentCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,10 +59,21 @@ public class ImageDetailsFragment extends BaseFragmentG
         findViewByID(v);
         showDataInt();
 
-        fetchData();
 
         return v;
     }
+
+
+    @Override
+    public void onResume()
+    {
+        fetchData();
+        super.onResume();
+    }
+
+    String like_notlike = "yes";
+    private final String LIKE      = "yes";
+    private final String NOT_LIKED = "no";
 
 
     private void findViewByID(View view)
@@ -73,22 +83,13 @@ public class ImageDetailsFragment extends BaseFragmentG
         imgPost = (RoundedCornersGaganImg) view.findViewById(R.id.imgPost);
         tvLocation = (TextView) view.findViewById(R.id.tvLocation);
         tvViewCount = (TextView) view.findViewById(R.id.tvViewCount);
+        tvLikeCount = (TextView) view.findViewById(R.id.tvLikeCount);
+        tvCommentCount = (TextView) view.findViewById(R.id.tvCommentCount);
         viewIdCard = view.findViewById(R.id.viewIdCard);
 
         showIDcard();
 
 
-        imgLike.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-
-                UtillG.ShowToastImage(getActivity(), R.drawable.vector_heart);
-
-
-            }
-        });
     }
 
 
@@ -117,9 +118,10 @@ public class ImageDetailsFragment extends BaseFragmentG
 
     private void showCompleteData(final ImageInfo imageInfo)
     {
-        tvLocation.setText(imageInfo.getTagLocation());
-
         tvViewCount.setText(imageInfo.getViewCount());
+
+        tvLikeCount.setText(imageInfo.getLikeCount());
+        tvCommentCount.setText(imageInfo.getCommentCount());
 
         if (!imageInfo.getStatusLine().equals("null") && !imageInfo.getStatusLine().isEmpty())
         {
@@ -137,24 +139,125 @@ public class ImageDetailsFragment extends BaseFragmentG
             {
                 if (!getLocaldata().getUserid().equals(imageInfo.getHomeModel().getCustomerId()))
                 {
-                    RecentChatModel recentChatModel = new RecentChatModel();
-                    recentChatModel.setCustomerIdTo(imageInfo.getHomeModel().getCustomerId());
-                    recentChatModel.setCustomerName(imageInfo.getCustomerName());
-                    recentChatModel.setChatContent("");
-                    recentChatModel.setDateTimeCreated("");
-                    recentChatModel.setPhotoPath(imageInfo.getPhotoPath());
-                    recentChatModel.setIsRead("");
+                    if (BlockedByMe)
+                    {
+                        UtillG.show_dialog_msg(getActivity(), "You have blocked this user. Go to settings to unblock " + imageInfo.getCustomerName() + " ?", new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View view)
+                            {
+                                UtillG.global_dialog.dismiss();
+                                startActivity(new Intent(getActivity(), BlockListActivity.class));
+                            }
+                        });
+                    }
+                    else
+                    {
+                        RecentChatModel recentChatModel = new RecentChatModel();
+                        recentChatModel.setCustomerIdTo(imageInfo.getHomeModel().getCustomerId());
+                        recentChatModel.setCustomerName(imageInfo.getCustomerName());
+                        recentChatModel.setChatContent("");
+                        recentChatModel.setDateTimeCreated("");
+                        recentChatModel.setPhotoPath(imageInfo.getPhotoPath());
+                        recentChatModel.setIsRead("");
 
 
-                    Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    intent.putExtra("data", recentChatModel);
-                    getActivity().startActivity(intent);
+                        Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        intent.putExtra("data", recentChatModel);
+                        getActivity().startActivity(intent);
+                    }
                 }
             }
         });
 
 
+        tvCommentCount.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getActivity(), CommentsListActivity.class);
+                intent.putExtra("ThemePostId", homeModel.getThemePostId());
+                intent.putExtra("ThemeId", homeModel.getThemeId());
+                startActivity(intent);
+
+            }
+        });
+
+
         idCardModel = new IdCardModel(imageInfo.getPhotoPath(), imageInfo.getCustomerName(), imageInfo.getEmailId(), imageInfo.getStatusLine(), imageInfo.getHomeModel().getCustomerId());
+
+
+//        like feature
+
+
+        imgLike.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                showProgress();
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("CustomerId", getLocaldata().getUserid());
+                hashMap.put("ThemeID",homeModel.getThemeId());
+                hashMap.put("ThemePostId", homeModel.getThemePostId());
+                hashMap.put("IsLike", like_notlike);
+//                {"ThemePostId":11, "ThemeID" : 38, "CustomerId" : 123 , "IsLike" : "yes" or "no"}
+
+                new SuperAsyncG(GlobalConstantsG.URL + "theme/SavePostLike", hashMap, new CallBackG<String>()
+                {
+                    @Override
+
+                    public void callBack(String response)
+                    {
+                        try
+                        {
+                            cancelProgress();
+                            JSONObject jboj = new JSONObject(response);
+
+                            if (jboj.getString(GlobalConstantsG.Status).equals(GlobalConstantsG.success))
+                            {
+                                if (like_notlike.equals(LIKE))
+                                {
+//                                    UtillG.ShowToastImage(getActivity(), R.drawable.vector_heart);
+                                    imgLike.setImageResource(R.mipmap.ic_like);
+
+                                    like_notlike = NOT_LIKED;
+
+                                    imageInfo.setLikeCount(String.format("%d", Integer.parseInt(imageInfo.getLikeCount()) + 1));
+                                    tvLikeCount.setText(imageInfo.getLikeCount());
+                                }
+                                else
+                                {
+                                    imgLike.setImageResource(R.mipmap.ic_notlike);
+                                    like_notlike = LIKE;
+
+                                    imageInfo.setLikeCount(String.format("%d", Integer.parseInt(imageInfo.getLikeCount()) - 1));
+
+                                    tvLikeCount.setText(imageInfo.getLikeCount());
+                                }
+                            }
+                            else
+                            {
+                                UtillG.showToast(jboj.getString(GlobalConstantsG.Message), getActivity(), true);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }).execute();
+
+
+            }
+        });
+
+
+        tvLocation.setText(imageInfo.getTagLocation());
+        tvLocation.setSelected(true);
+
+//        end like feature
 
 
     }
@@ -199,10 +302,25 @@ public class ImageDetailsFragment extends BaseFragmentG
                     Intent intent = new Intent(getActivity(), ViewPostActivity.class);
                     intent.putExtra("data", idCardModel);
                     startActivity(intent);
+
                 }
             }
         });
 
+
+        imgShare.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+//                Intent shareIntent = new Intent();
+//                shareIntent.setAction(Intent.ACTION_SEND);
+//                shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
+//                shareIntent.setType("image/jpeg");
+//                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
+
+            }
+        });
 
     }
 
@@ -246,6 +364,23 @@ public class ImageDetailsFragment extends BaseFragmentG
 
                         imageInfo.setViewCount(jInner.getString("ViewCount"));
 
+                        imageInfo.setLikeCount(jInner.getString("LikeCount"));
+
+                        imageInfo.setCommentCount(jInner.optString("CommentCount"));
+
+
+                        if (jInner.getString("LikedByMe").equals(LIKE))
+                        {
+                            like_notlike = NOT_LIKED;
+                            imgLike.setImageResource(R.mipmap.ic_like);
+                        }
+                        else
+                        {
+                            like_notlike = LIKE;
+                            imgLike.setImageResource(R.mipmap.ic_notlike);
+                        }
+
+
                         imageInfo.setHomeModel(homeModel);
 
 
@@ -269,6 +404,9 @@ public class ImageDetailsFragment extends BaseFragmentG
 
 
                         imgPost.setImageUrl(getActivity(), jInner.getString("ImagePath"));
+
+                        BlockedByMe = jInner.optString("BlockedByMe").equals(LIKE);
+
                         showCompleteData(imageInfo);
 
 
@@ -288,9 +426,42 @@ public class ImageDetailsFragment extends BaseFragmentG
     }
 
 
+    boolean BlockedByMe;
+//    BlockedByMe
+//            BlockedByThem
+
     public class ImageInfo
     {
-        private String StatusLine, TagLocation, CreatedDate, ViewCount, CustomerName, PhotoPath, EmailId;
+        private String StatusLine;
+        private String TagLocation;
+        private String CreatedDate;
+        private String ViewCount;
+        private String CustomerName;
+        private String PhotoPath;
+        private String EmailId;
+        private String LikeCount;
+
+        public String getCommentCount()
+        {
+            return CommentCount;
+        }
+
+        public void setCommentCount(String commentCount)
+        {
+            CommentCount = commentCount;
+        }
+
+        private String CommentCount;
+
+        public String getLikeCount()
+        {
+            return LikeCount;
+        }
+
+        public void setLikeCount(String likeCount)
+        {
+            LikeCount = likeCount;
+        }
 
         private HomeModel homeModel;
 

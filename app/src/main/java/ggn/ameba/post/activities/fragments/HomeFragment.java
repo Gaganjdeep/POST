@@ -7,10 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -31,16 +29,11 @@ import java.util.List;
 import ggn.ameba.post.R;
 import ggn.ameba.post.UtillsG.CallBackG;
 import ggn.ameba.post.UtillsG.GlobalConstantsG;
-import ggn.ameba.post.UtillsG.SharedPrefHelper;
-import ggn.ameba.post.UtillsG.UtillG;
 import ggn.ameba.post.WebService.SuperAsyncG;
-import ggn.ameba.post.activities.HomeTabActivity;
 import ggn.ameba.post.activities.RecentChatListActivity;
 import ggn.ameba.post.activities.SettingsActivity;
-import ggn.ameba.post.activities.ThemeInfoActivtiy;
 import ggn.ameba.post.adapter.HomeAdapter;
 import ggn.ameba.post.adapter.HomeModel;
-import ggn.ameba.post.adapter.RecentChatAdapter;
 import ggn.ameba.post.widget.EndlessRecyclerOnScrollListener;
 
 /**
@@ -112,13 +105,13 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
             {
                 if (listHome.size() > 14)
                 {
-                    showData(PAGE_NUMBER);
+                    showData(PAGE_NUMBER, keywordG);
                 }
 
             }
         };
 //        showData(0);
-        showData(0);
+        showData(0, "");
         recyclerview.setOnScrollListener(endlessRecyclerOnScrollListener);
 
 
@@ -129,7 +122,8 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
             {
                 endlessRecyclerOnScrollListener.startOverStaggered();
                 PAGE_NUMBER = 0;
-                showData(0);
+                keywordG = "";
+                showData(0, "");
             }
         });
 
@@ -147,7 +141,10 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
     StaggeredGridLayoutManager mLayoutManager;
 
 
-    private void showData(final int pageNUmber)
+    String keywordG = "";
+
+
+    private void showData(final int pageNUmber, String keyword)
     {
         if (pageNUmber == 0)
         {
@@ -158,7 +155,7 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
             isLoading(true);
         }
 
-        new SuperAsyncG(GlobalConstantsG.URL + "theme/GetThemePosts?ThemeID=" + getLocaldata().getThemeID() + "&PageNumber=" + pageNUmber, new HashMap<String, String>(), new CallBackG<String>()
+        new SuperAsyncG(GlobalConstantsG.URL + "theme/GetThemePosts?ThemeID=" + getLocaldata().getThemeID() + "&PageNumber=" + pageNUmber + "&Keywords=" + keyword, new HashMap<String, String>(), new CallBackG<String>()
         {
             @Override
             public void callBack(String response)
@@ -198,6 +195,8 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
                             homemodel.setCreatedDate(jInner.getString("CreatedDate"));
                             homemodel.setCustomerId(jInner.getString("CustomerId"));
                             homemodel.setThemePostId(jInner.getString("ThemePostId"));
+
+                            homemodel.setThemeId(jInner.getString("ThemeID"));
 
                             listHome.add(homemodel);
                         }
@@ -240,18 +239,21 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
 
         }
 
-
     }
 
     @Override
     public boolean onQueryTextSubmit(String query)
     {
+
+
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText)
     {
+        keywordG = newText;
+        showData(0, keywordG);
         return false;
     }
 
@@ -305,7 +307,8 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
         {
             endlessRecyclerOnScrollListener.startOverStaggered();
             PAGE_NUMBER = 0;
-            showData(0);
+            keywordG = "";
+            showData(0, "");
         }
     }
 

@@ -36,12 +36,34 @@
 
 
     <TextView
+        android:id="@+id/tvThemeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="28-April :FOOD"
+        android:text="Theme Name :FOOD"
         android:textColor="@color/golden"
         android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Ending on : 28-April"
+        android:textColor="@color/golden"
+        android:textStyle="bold"/>
+
+
+    <TextView
+        android:id="@+id/tvOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Overview"
+        android:textColor="@color/golden"
+        android:textStyle="bold"/>
+
+
 
 
 </LinearLayout>

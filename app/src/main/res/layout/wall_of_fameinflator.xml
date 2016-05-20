@@ -17,13 +17,46 @@
             android:id="@+id/imgVpost"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/food_demo_img"
+            android:background="@drawable/default_grey"
             android:scaleType="centerCrop"/>
+
+
+        <LinearLayout
+            android:id="@+id/layoutNoImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\?"
+                android:textColor="@color/golden"
+                android:textSize="70sp"
+                android:textStyle="bold"
+                android:typeface="serif"/>
+
+
+            <TextView
+                android:id="@+id/tvdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="starts from "
+                android:textColor="@color/golden"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:typeface="serif"/>
+
+
+        </LinearLayout>
+
 
     </FrameLayout>
 
 
     <TextView
+        android:id="@+id/tvThemeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

@@ -111,6 +111,10 @@
         </activity>
         <activity android:name=".activities.BlockListActivity">
         </activity>
+        <activity
+            android:name=".activities.CommentsListActivity"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

@@ -2,7 +2,6 @@ package ggn.ameba.post.activities.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import ggn.ameba.post.R;
 import ggn.ameba.post.UtillsG.DateUtilsG;
+import ggn.ameba.post.activities.SplashActivity;
 import ggn.ameba.post.activities.ThemeInfoActivtiy;
 import ggn.ameba.post.widget.CountDownView;
 import ggn.ameba.post.widget.TimerListener;
@@ -25,7 +25,7 @@ public class HomeFragmentMain extends BaseFragmentG implements TimerListener
 
     private LinearLayout themeLayout;
 
-    private TextView tvFood;
+    private TextView tvFood, tvMarquee;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,9 +38,8 @@ public class HomeFragmentMain extends BaseFragmentG implements TimerListener
 
         frameContainer = (FrameLayout) view.findViewById(R.id.container);
         themeLayout = (LinearLayout) view.findViewById(R.id.themeLayout);
-        tvFood= (TextView) view.findViewById(R.id.tvFood);
-
-
+        tvFood = (TextView) view.findViewById(R.id.tvFood);
+        tvMarquee = (TextView) view.findViewById(R.id.tvMarquee);
 
         getChildFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
@@ -54,6 +53,10 @@ public class HomeFragmentMain extends BaseFragmentG implements TimerListener
                 startActivity(new Intent(getActivity(), ThemeInfoActivtiy.class));
             }
         });
+
+
+        tvMarquee.setText(getLocaldata().getMarqueeText());
+        tvMarquee.setSelected(true);
 
 
         return view;
@@ -72,7 +75,10 @@ public class HomeFragmentMain extends BaseFragmentG implements TimerListener
     public void timerElapsed()
     {
         countdownview.reset();
-        countdownview.setInitialTime(30000); // Initial time of 30 seconds.
-        countdownview.start();
+
+        startActivity(new Intent(getActivity(), SplashActivity.class));
+        getActivity().finish();
+
+
     }
 }

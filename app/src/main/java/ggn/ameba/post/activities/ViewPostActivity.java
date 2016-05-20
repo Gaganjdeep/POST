@@ -124,6 +124,7 @@ public class ViewPostActivity extends BaseActivityG
                             homemodel.setCreatedDate(jInner.getString("CreatedDate"));
                             homemodel.setCustomerId(jInner.getString("CustomerId"));
                             homemodel.setThemePostId(jInner.getString("ThemePostId"));
+                            homemodel.setThemeId(jInner.getString("ThemeID"));
 
                             listHome.add(homemodel);
                         }
