@@ -1,17 +1,22 @@
 package ggn.ameba.post.activities;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 
 import org.json.JSONObject;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import ggn.ameba.post.R;
 import ggn.ameba.post.UtillsG.CallBackG;
-import ggn.ameba.post.UtillsG.DateUtilsG;
 import ggn.ameba.post.UtillsG.GlobalConstantsG;
 import ggn.ameba.post.UtillsG.SharedPrefHelper;
 import ggn.ameba.post.UtillsG.UtillG;
@@ -27,24 +32,19 @@ public class SplashActivity extends BaseActivityG
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-//        new Handler().postDelayed(new Runnable()
-//        {
-//            @Override
-//            public void run()
-//            {
-//                if (getLocaldata().getUserid().equals(""))
-//                {
-//                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-//                }
-//                else
-//                {
-//                    startActivity(new Intent(SplashActivity.this, HomeTabActivity.class));
-//                }
-        updateThemeInfo();
-        if (UtillG.isMyServiceRunning(TimerService.class, SplashActivity.this))
+        try
         {
-            stopService(new Intent(SplashActivity.this, TimerService.class));
+            if (UtillG.isMyServiceRunning(TimerService.class, SplashActivity.this))
+            {
+                stopService(new Intent(SplashActivity.this, TimerService.class));
+            }
         }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        updateThemeInfo();
 
 //            }
 //        }, 1000);

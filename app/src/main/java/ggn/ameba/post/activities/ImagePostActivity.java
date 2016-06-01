@@ -2,16 +2,21 @@ package ggn.ameba.post.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.android.gms.maps.model.LatLng;
 import com.isseiaoki.simplecropview.CropImageView;
 import com.squareup.picasso.Callback;
@@ -42,18 +47,21 @@ public class ImagePostActivity extends CurrentLocActivityG
     @Override
     public void getCurrentLocationG(Location location)
     {
-        try
+        if (imageSet)
         {
-            loc = location;
-
-            if (tvLocation != null)
+            try
             {
-                tvLocation.setText(UtillG.locationName(ImagePostActivity.this, new LatLng(location.getLatitude(), location.getLongitude())));
+                loc = location;
+
+                if (tvLocation != null)
+                {
+                    tvLocation.setText(UtillG.locationName(ImagePostActivity.this, new LatLng(location.getLatitude(), location.getLongitude())));
+                }
             }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
 
 
@@ -84,6 +92,8 @@ public class ImagePostActivity extends CurrentLocActivityG
     }
 
 
+    boolean imageSet = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -97,7 +107,7 @@ public class ImagePostActivity extends CurrentLocActivityG
 
         imgView = (CropImageView) findViewById(R.id.imgView);
         imgView.setCropMode(CropImageView.CropMode.RATIO_4_3);
-        imgView.setCustomRatio(4,3);
+        imgView.setCustomRatio(4, 3);
 //        imgView.setAspectRatio(1, 1);
 
 
@@ -128,9 +138,9 @@ public class ImagePostActivity extends CurrentLocActivityG
 //            e.printStackTrace();
 //        }
 
-        Picasso.with(this).load(imageUri)
+      /*  Picasso.with(this).load(imageUri)
                 .centerInside()
-                .resize(640, 400)
+                .resize(640, 640)
                 .into(imgView, new Callback()
                 {
                     @Override
@@ -142,6 +152,8 @@ public class ImagePostActivity extends CurrentLocActivityG
                             public void run()
                             {
                                 imgView.setImageBitmap(((BitmapDrawable) imgView.getDrawable()).getBitmap());
+                                imageSet = true;
+                                displayLocation();
                             }
                         });
 
@@ -153,7 +165,24 @@ public class ImagePostActivity extends CurrentLocActivityG
                     {
 
                     }
+                });*/
+
+
+        Glide.with(this).load(imageUri).asBitmap().
+                into(new SimpleTarget<Bitmap>(500, 500)
+                {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)
+                    {
+                        imgView.setImageBitmap(resource); // Possibly runOnUiThread()
+                        imageSet = true;
+                        displayLocation();
+                    }
                 });
+
+
+
+
      /*   Picasso.with(this).load(imageUri)
                 .centerInside()
                 .resize(640, 400)
@@ -276,6 +305,8 @@ public class ImagePostActivity extends CurrentLocActivityG
             displayLocation();
 
         }
+
+        Log.e("map", "" + hashMap);
 
 
 //        {"ThemeID" : 38, "CustomerId" : 123, "ImagePath" : "base64","HashTag" : "Pizza,Beer",

@@ -84,7 +84,7 @@ public class ViewPostActivity extends BaseActivityG
         tv.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "fonts/Gnawhard.otf"));
 
         tvEmail = (TextView) viewIdCard.findViewById(R.id.tvEmail);
-        tvEmail.setText(idCardModel.getEmail());
+//        tvEmail.setText(idCardModel.getEmail());
 
         ((ImageView) viewIdCard.findViewById(R.id.img_eye)).setVisibility(View.INVISIBLE);
         ((ImageView) viewIdCard.findViewById(R.id.imgedit)).setVisibility(View.INVISIBLE);

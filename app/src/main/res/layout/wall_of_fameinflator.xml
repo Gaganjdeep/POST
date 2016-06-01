@@ -40,11 +40,13 @@
 
             <TextView
                 android:id="@+id/tvdate"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
                 android:text="starts from "
                 android:textColor="@color/golden"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:textStyle="bold"
                 android:typeface="serif"/>
 
@@ -66,7 +68,7 @@
         android:padding="10dp"
         android:text="Theme : Food"
         android:textColor="@color/golden"
-        android:textSize="17sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         android:typeface="serif"/>
 

@@ -23,7 +23,6 @@ import ggn.ameba.post.UtillsG.CallBackG;
 import ggn.ameba.post.UtillsG.DateUtilsG;
 import ggn.ameba.post.UtillsG.GlobalConstantsG;
 import ggn.ameba.post.WebService.SuperAsyncG;
-import ggn.ameba.post.adapter.HomeModel;
 import ggn.ameba.post.adapter.WallFameAdapter;
 import ggn.ameba.post.adapter.WallOfFameModel;
 
@@ -67,12 +66,12 @@ public class WallFameFragment extends BaseFragmentG
         return view;
     }
 
-    SimpleDateFormat sdf = new SimpleDateFormat(DateUtilsG.G_FORMAT, Locale.US);
+    SimpleDateFormat sdf = new SimpleDateFormat(DateUtilsG.G_FORMAT_SHORT, Locale.US);
 
     private void showData()
     {
 
-        showProgress();
+//        showProgress();
 
         new SuperAsyncG(GlobalConstantsG.URL + "theme/GetWallFame", new HashMap<String, String>(), new CallBackG<String>()
         {
@@ -81,7 +80,7 @@ public class WallFameFragment extends BaseFragmentG
             {
                 try
                 {
-                    cancelProgress();
+//                    cancelProgress();
 
 
                     JSONObject jboj = new JSONObject(response);
@@ -90,6 +89,7 @@ public class WallFameFragment extends BaseFragmentG
                     {
                         JSONArray jsonArray = new JSONArray(jboj.getString(GlobalConstantsG.Message));
 
+                        listData.clear();
 
                         for (int i = 0; i < jsonArray.length(); i++)
                         {

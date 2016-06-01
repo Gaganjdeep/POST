@@ -49,13 +49,12 @@ public class WallFameAdapter extends RecyclerView.Adapter<WallFameAdapter.HomeVi
         if (!currentData.getWallFamePhoto().isEmpty())
         {
             holder.layoutNoImage.setVisibility(View.GONE);
-            holder.imgVpost.setImageUrl(context, currentData.getWallFamePhoto());
+            holder.imgVpost.setImageUrlWall(context, currentData.getWallFamePhoto());
         }
         else
         {
             holder.layoutNoImage.setVisibility(View.VISIBLE);
             holder.imgVpost.setVisibility(View.GONE);
-
 
 
             holder.tvdate.setText(currentData.getThemeEndDate());
@@ -75,7 +74,7 @@ public class WallFameAdapter extends RecyclerView.Adapter<WallFameAdapter.HomeVi
     {
         public RoundedCornersGaganImg imgVpost;
 
-        public TextView tvThemeName,tvdate;
+        public TextView tvThemeName, tvdate;
 
         LinearLayout layoutNoImage;
 

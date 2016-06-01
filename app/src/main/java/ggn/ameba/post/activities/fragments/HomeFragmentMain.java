@@ -9,8 +9,22 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.isseiaoki.simplecropview.util.Utils;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 import ggn.ameba.post.R;
+import ggn.ameba.post.UtillsG.CallBackG;
 import ggn.ameba.post.UtillsG.DateUtilsG;
+import ggn.ameba.post.UtillsG.GlobalConstantsG;
+import ggn.ameba.post.UtillsG.SharedPrefHelper;
+import ggn.ameba.post.UtillsG.ShowIntrensicAd;
+import ggn.ameba.post.UtillsG.UtillG;
+import ggn.ameba.post.WebService.SuperAsyncG;
+import ggn.ameba.post.activities.HomeTabActivity;
+import ggn.ameba.post.activities.LoginActivity;
 import ggn.ameba.post.activities.SplashActivity;
 import ggn.ameba.post.activities.ThemeInfoActivtiy;
 import ggn.ameba.post.widget.CountDownView;
@@ -59,6 +73,7 @@ public class HomeFragmentMain extends BaseFragmentG implements TimerListener
         tvMarquee.setSelected(true);
 
 
+
         return view;
     }
 
@@ -68,6 +83,7 @@ public class HomeFragmentMain extends BaseFragmentG implements TimerListener
         countdownview.setInitialTime(DateUtilsG.timeLeft(getLocaldata().getThemeEndDate()));
         countdownview.start();
         countdownview.setListener(this);
+
         super.onResume();
     }
 
@@ -75,10 +91,57 @@ public class HomeFragmentMain extends BaseFragmentG implements TimerListener
     public void timerElapsed()
     {
         countdownview.reset();
-
-        startActivity(new Intent(getActivity(), SplashActivity.class));
-        getActivity().finish();
-
-
+        updateThemeInfo();
     }
+
+
+    private void updateThemeInfo()
+    {
+        new SuperAsyncG(GlobalConstantsG.URL + "theme/GetActiveTheme", new HashMap<String, String>(), new CallBackG<String>()
+        {
+            @Override
+            public void callBack(String response)
+            {
+                try
+                {
+                    JSONObject jboj = new JSONObject(response);
+
+                    if (jboj.getString(GlobalConstantsG.Status).equals(GlobalConstantsG.success))
+                    {
+                        JSONObject jbojInner = new JSONObject(jboj.getString(GlobalConstantsG.Message));
+
+
+                        if (getLocaldata().getThemeID().equals(jbojInner.getString("ThemeID")))
+                        {
+                            // TODO: THEME IS NOT UPDATED ON SERVER..
+                        }
+                        else
+                        {
+                            SharedPrefHelper sharedPrefHelper = getLocaldata();
+                            sharedPrefHelper.setThemeName(jbojInner.getString("ThemeName"));
+                            sharedPrefHelper.setThemeOverview(jbojInner.getString("Overview"));
+                            sharedPrefHelper.setThemeEndDate(jbojInner.getString("ThemeEndDate"));
+                            sharedPrefHelper.setThemeStartDate(jbojInner.getString("ThemeStartDate"));
+
+                            sharedPrefHelper.setThemeID(jbojInner.getString("ThemeID"));
+                            sharedPrefHelper.setMarqueeText(jbojInner.getString("MarqueeText"));
+
+
+                            UtillG.showToast("Theme Updated..!", getActivity(), true);
+
+                            startActivity(new Intent(getActivity(), SplashActivity.class));
+                            getActivity().finish();
+                        }
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }).execute();
+    }
+
+
 }

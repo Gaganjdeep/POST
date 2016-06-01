@@ -30,9 +30,10 @@ public class BaseActivityG extends AppCompatActivity
     }
 
 
-    Dialog dialog;
+      static Dialog dialog;
 
-    public void showProgress() {
+    public void showProgress()
+    {
         dialog = new Dialog(this, R.style.Theme_Dialog);
         dialog.setContentView(R.layout.progress_dialog);
         dialog.setCancelable(false);
@@ -40,8 +41,11 @@ public class BaseActivityG extends AppCompatActivity
 
     }
 
-    public void cancelProgress() {
-        if (dialog != null) {
+    public void cancelProgress()
+    {
+        if (dialog != null)
+        {
+            dialog.dismiss();
             dialog.cancel();
         }
     }

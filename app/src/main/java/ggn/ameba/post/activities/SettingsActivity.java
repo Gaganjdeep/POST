@@ -60,7 +60,12 @@ public class SettingsActivity extends BaseActivityG
 
         tvStatusLine = (TextView) viewIdCard.findViewById(R.id.tvStatusLine);
         tvStatusLine.setVisibility(View.VISIBLE);
-        tvStatusLine.setText(getLocaldata().getTagLine());
+
+        if (!getLocaldata().getTagLine().equals("null") && !getLocaldata().getTagLine().isEmpty())
+        {
+            tvStatusLine.setText(getLocaldata().getTagLine());
+        }
+
 
         tvEmail = (TextView) viewIdCard.findViewById(R.id.tvEmail);
         tvEmail.setVisibility(View.VISIBLE);
@@ -134,10 +139,10 @@ public class SettingsActivity extends BaseActivityG
 
                                 UtillG.global_dialog.dismiss();
 
-                                Intent i = new Intent(SettingsActivity.this, LoginActivity.class);
+                                Intent i = new Intent(SettingsActivity.this, SplashActivity.class);
                                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i);
-
+                                HomeTabActivity.homeTabActivity.finish();
                                 finish();
                             }
                             else

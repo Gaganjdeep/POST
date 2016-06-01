@@ -123,10 +123,12 @@ public class LoginActivity extends BaseActivityG
                 @Override
                 public void callBack(String response)
                 {
-                    cancelProgress();
+
 
                     try
                     {
+                        cancelProgress();
+
                         JSONObject jboj = new JSONObject(response);
 
                         if (jboj.getString(GlobalConstantsG.Status).equals(GlobalConstantsG.success))
@@ -223,7 +225,50 @@ public class LoginActivity extends BaseActivityG
 
     public void forGetPassword(View view)
     {
-        // TODO: forget password functionality here..
+        if (mEmailView.getText().toString().trim().isEmpty())
+        {
+            UtillG.showSnacky(mEmailView, "Please enter a email,then request for a password.");
+            mEmailView.requestFocus();
+            return;
+        }
+        else if (!isEmailValid(mEmailView.getText().toString().trim()))
+        {
+            UtillG.showSnacky(mEmailView, "Email not valid..!");
+            mEmailView.requestFocus();
+            return;
+        }
+
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("UserEmailAddress", mEmailView.getText().toString().trim());
+
+        new SuperAsyncG(GlobalConstantsG.URL + "User/ForgotPassword", hashMap, new CallBackG<String>()
+        {
+            @Override
+            public void callBack(String response)
+            {
+                cancelProgress();
+                try
+                {
+                    JSONObject jboj = new JSONObject(response);
+
+                    if (jboj.getString(GlobalConstantsG.Status).equals(GlobalConstantsG.success))
+                    {
+                        UtillG.show_dialog_msg(LoginActivity.this, jboj.getString(GlobalConstantsG.Message), null);
+                    }
+                    else
+                    {
+                        UtillG.showToast(jboj.getString(GlobalConstantsG.Message), LoginActivity.this, true);
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    cancelProgress();
+                    e.printStackTrace();
+                }
+            }
+        }).execute();
 
     }
 

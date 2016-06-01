@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -72,6 +73,16 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        try
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+            StrictMode.setThreadPolicy(policy);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         listHome = new ArrayList<>();
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refreshLayout);
@@ -198,7 +209,15 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
 
                             homemodel.setThemeId(jInner.getString("ThemeID"));
 
+
+                            if (listHome.size() > 0 && listHome.size() % 7 == 0)
+                            {
+                                listHome.add(null);
+                            }
+
                             listHome.add(homemodel);
+
+
                         }
                         PAGE_NUMBER++;
                         homeAdapter.notifyDataSetChanged();
@@ -230,7 +249,6 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
                 startActivity(new Intent(getActivity(), RecentChatListActivity.class));
                 break;
             case R.id.imgSettings:
-
 
                 startActivity(new Intent(getActivity(), SettingsActivity.class));
 

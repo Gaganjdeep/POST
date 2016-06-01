@@ -85,14 +85,16 @@
             </android.support.design.widget.TextInputLayout>
 
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|bottom"
                 android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
                 android:onClick="forGetPassword"
                 android:padding="7dp"
                 android:text="Forget password..!"
+                android:textAllCaps="false"
                 android:textColor="@color/white"/>
 
 

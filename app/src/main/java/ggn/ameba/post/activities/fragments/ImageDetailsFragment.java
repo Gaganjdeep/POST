@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,41 +133,43 @@ public class ImageDetailsFragment extends BaseFragmentG
         tvName.setText(imageInfo.getCustomerName());
 
 
+        imgedit.setVisibility(getLocaldata().getUserid().equals(imageInfo.getHomeModel().getCustomerId()) ? View.GONE : View.VISIBLE);
+
         imgedit.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                if (!getLocaldata().getUserid().equals(imageInfo.getHomeModel().getCustomerId()))
+//                if (!getLocaldata().getUserid().equals(imageInfo.getHomeModel().getCustomerId()))
+//                {
+                if (BlockedByMe)
                 {
-                    if (BlockedByMe)
+                    UtillG.show_dialog_msg(getActivity(), "You have blocked this user. Go to settings to unblock " + imageInfo.getCustomerName() + " ?", new View.OnClickListener()
                     {
-                        UtillG.show_dialog_msg(getActivity(), "You have blocked this user. Go to settings to unblock " + imageInfo.getCustomerName() + " ?", new View.OnClickListener()
+                        @Override
+                        public void onClick(View view)
                         {
-                            @Override
-                            public void onClick(View view)
-                            {
-                                UtillG.global_dialog.dismiss();
-                                startActivity(new Intent(getActivity(), BlockListActivity.class));
-                            }
-                        });
-                    }
-                    else
-                    {
-                        RecentChatModel recentChatModel = new RecentChatModel();
-                        recentChatModel.setCustomerIdTo(imageInfo.getHomeModel().getCustomerId());
-                        recentChatModel.setCustomerName(imageInfo.getCustomerName());
-                        recentChatModel.setChatContent("");
-                        recentChatModel.setDateTimeCreated("");
-                        recentChatModel.setPhotoPath(imageInfo.getPhotoPath());
-                        recentChatModel.setIsRead("");
-
-
-                        Intent intent = new Intent(getActivity(), ChatActivity.class);
-                        intent.putExtra("data", recentChatModel);
-                        getActivity().startActivity(intent);
-                    }
+                            UtillG.global_dialog.dismiss();
+                            startActivity(new Intent(getActivity(), BlockListActivity.class));
+                        }
+                    });
                 }
+                else
+                {
+                    RecentChatModel recentChatModel = new RecentChatModel();
+                    recentChatModel.setCustomerIdTo(imageInfo.getHomeModel().getCustomerId());
+                    recentChatModel.setCustomerName(imageInfo.getCustomerName());
+                    recentChatModel.setChatContent("");
+                    recentChatModel.setDateTimeCreated("");
+                    recentChatModel.setPhotoPath(imageInfo.getPhotoPath());
+                    recentChatModel.setIsRead("");
+
+
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
+                    intent.putExtra("data", recentChatModel);
+                    getActivity().startActivity(intent);
+                }
+//                }
             }
         });
 
@@ -199,7 +202,7 @@ public class ImageDetailsFragment extends BaseFragmentG
                 showProgress();
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("CustomerId", getLocaldata().getUserid());
-                hashMap.put("ThemeID",homeModel.getThemeId());
+                hashMap.put("ThemeID", homeModel.getThemeId());
                 hashMap.put("ThemePostId", homeModel.getThemePostId());
                 hashMap.put("IsLike", like_notlike);
 //                {"ThemePostId":11, "ThemeID" : 38, "CustomerId" : 123 , "IsLike" : "yes" or "no"}
@@ -313,12 +316,10 @@ public class ImageDetailsFragment extends BaseFragmentG
             @Override
             public void onClick(View view)
             {
-//                Intent shareIntent = new Intent();
-//                shareIntent.setAction(Intent.ACTION_SEND);
-//                shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
-//                shareIntent.setType("image/jpeg");
-//                startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
-
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, homeModel.getImagePath());
+                startActivity(Intent.createChooser(shareIntent, "Share.."));
             }
         });
 

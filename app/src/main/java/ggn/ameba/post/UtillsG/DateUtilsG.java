@@ -3,9 +3,8 @@ package ggn.ameba.post.UtillsG;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by gagandeep on 29 Apr 2016.
@@ -14,7 +13,8 @@ public class DateUtilsG
 {
 
     public static String SEVER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
-    public static String G_FORMAT     = "MMM dd, hh:mm a";
+    public static String G_FORMAT     = "MMM dd,hh:mm a";
+    public static String G_FORMAT_SHORT     = "MMM dd";
 
 
     private static final SimpleDateFormat sdfServer = new SimpleDateFormat(SEVER_FORMAT);
@@ -50,7 +50,7 @@ public class DateUtilsG
 
     public static long timeLeft(String date)
     {
-//        sdfServer.setTimeZone(TimeZone.getTimeZone("UTC"));
+        sdfServer.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         try
         {
@@ -62,9 +62,9 @@ public class DateUtilsG
             long currentDateTime = System.currentTimeMillis();
 
 
-            System.out.println((endDateTime - currentDateTime) + "yo yo yo yo yo yo yo");
+//            System.out.println((endDateTime - currentDateTime) + "yo yo yo yo yo yo yo");
 
-            return endDateTime - currentDateTime;
+            return (endDateTime - currentDateTime) + TimeUnit.HOURS.toMillis(24);
 
 
         }

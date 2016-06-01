@@ -12,6 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -51,6 +52,7 @@ public class UtillG
         toast.show();
 
     }
+
 
 
     public static boolean isMyServiceRunning(Class<?> serviceClass, Context context)

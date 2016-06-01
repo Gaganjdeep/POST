@@ -97,8 +97,6 @@ public class ViewImageActivity extends BaseActivityG implements TimerListener
     public void timerElapsed()
     {
         countdownview.reset();
-        countdownview.setInitialTime(30000); // Initial time of 30 seconds.
-        countdownview.start();
     }
 
     public void hOme(View view)

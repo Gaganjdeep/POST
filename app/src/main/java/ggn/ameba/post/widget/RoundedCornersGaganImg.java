@@ -154,9 +154,8 @@ public class RoundedCornersGaganImg extends ImageView
 
         if (!URL.isEmpty())
         {
-
             Picasso.with(con).load(URL)
-                    .resize(450, 450)
+                    .resize(470, 470)
                     .centerInside()
                     .placeholder(R.drawable.default_grey)
                     .error(R.drawable.default_grey)
@@ -169,12 +168,28 @@ public class RoundedCornersGaganImg extends ImageView
 
     }
 
+    public void setImageUrlWall(Context con, String URL)
+    {
+        if (!URL.isEmpty())
+        {
+            Picasso.with(con).load(URL)
+                    .resize(350, 350)
+                    .placeholder(R.drawable.default_grey)
+                    .error(R.drawable.default_grey)
+                    .into(RoundedCornersGaganImg.this);
+        }
+        else
+        {
+            this.setImageResource(R.drawable.default_grey);
+        }
+    }
+
     public void setImageUrlSmall(Context con, String URL)
     {
         if (!URL.isEmpty())
         {
             Picasso.with(con).load(URL)
-                    .resize(150, 150)
+                    .resize(250, 250)
                     .centerInside()
                     .placeholder(R.drawable.default_grey)
                     .error(R.drawable.default_grey)
@@ -191,7 +206,7 @@ public class RoundedCornersGaganImg extends ImageView
             Picasso.with(con).load(URL)
                     .transform(new CircleTransform())
                     .centerCrop()
-                    .resize(60, 60)
+                    .resize(120, 120)
                     .placeholder(R.mipmap.ic_default_pic_rounded)
                     .error(R.mipmap.ic_default_pic_rounded)
                     .into(this);

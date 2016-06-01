@@ -31,8 +31,8 @@ public class WebServiceHelper
             url = new URL(requestURL);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(25000);
-            conn.setConnectTimeout(25000);
+//            conn.setReadTimeout(25000);
+//            conn.setConnectTimeout(25000);
             conn.setRequestMethod("POST");
             conn.setDoInput(true);
             conn.setDoOutput(true);

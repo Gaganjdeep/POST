@@ -114,7 +114,7 @@ public class SharedPrefHelper
 
     public String getThemeID()
     {
-        return sharedPreferences.getString("ThemeID", "38");
+        return sharedPreferences.getString("ThemeID", "");
     }
 
     public void setMarqueeText(String MarqueeText)
@@ -155,7 +155,7 @@ public class SharedPrefHelper
 
     public String getThemeName()
     {
-        return sharedPreferences.getString("ThemeName", "Food");
+        return sharedPreferences.getString("ThemeName", "");
     }
 
 

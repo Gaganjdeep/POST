@@ -21,6 +21,7 @@ public class HomeTabActivity extends AppCompatActivity
     private ViewPager mViewPager;
 
     TabLayout tablayout;
+   static HomeTabActivity homeTabActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,6 +31,7 @@ public class HomeTabActivity extends AppCompatActivity
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+        homeTabActivity=this;
 
         tablayout = (TabLayout) findViewById(R.id.tablayout);
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -47,9 +49,7 @@ public class HomeTabActivity extends AppCompatActivity
 
         for (int i = 0; i < tablayout.getTabCount(); i++)
         {
-
             tablayout.getTabAt(i).setIcon(selectedIcons[i]);
-
         }
 
 
@@ -79,8 +79,6 @@ public class HomeTabActivity extends AppCompatActivity
         {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-
-
             return fragments[position];
         }
 

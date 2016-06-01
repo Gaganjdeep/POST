@@ -150,20 +150,6 @@ public class ChatActivity extends BaseActivityG
         if (item.getItemId() == R.id.clear)
         {
 
-//    URL: ttp://112.196.34.42:8089/Chat/ClearAllChat
-//
-//    Method:Post
-//
-//    Header : Content-Type: application/json
-//
-//    Body-
-//    {"CustomerIdBy":267,"CustomerIdTo":264}
-//
-//    Result/Output:
-//
-//    {"Status":"success","Message":"Chat is deleted successfully."}
-//    or
-//    {"Status":"error","Message":"Chat is not deleted."}
 
             View.OnClickListener onClickListener = new View.OnClickListener()
             {
@@ -246,7 +232,7 @@ public class ChatActivity extends BaseActivityG
                     hashMap.put("IsBlocked", "1");
 
 
-                    new SuperAsyncG(GlobalConstantsG.URL + "Customer/SaveBlockUnblock", hashMap,  new CallBackG<String>()
+                    new SuperAsyncG(GlobalConstantsG.URL + "Customer/SaveBlockUnblock", hashMap, new CallBackG<String>()
                     {
                         @Override
                         public void callBack(String response)
