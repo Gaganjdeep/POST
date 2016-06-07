@@ -1,6 +1,7 @@
 package ggn.ameba.post.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -152,6 +156,25 @@ public class EditProfileActivity extends BaseActivityG
 
                         }
                     });
+
+
+//            Glide.with(this).load(uri)
+//                    .asBitmap().
+//                    into(new SimpleTarget<Bitmap>(200, 500)
+//                    {
+//                        @Override
+//                        public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)
+//                        {
+//
+//                            CircleTransform circleTransform=new CircleTransform();
+//
+//                            circleTransform.transform(resource);
+//
+//                            imgView.setImageBitmap(resource); // Possibly runOnUiThread()
+//                            imageSet = true;
+//                            displayLocation();
+//                        }
+//                    });
 
 
 //            baseImage = BitmapDecoderG.getBytesImage(EditProfileActivity.this, uri);

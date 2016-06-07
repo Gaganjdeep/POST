@@ -176,6 +176,18 @@ public class SharedPrefHelper
     }
 
 
+    public void setEmailVerified(boolean EmailVerified)
+    {
+        edit.putBoolean("EmailVerified", EmailVerified);
+        edit.apply();
+    }
+
+    public boolean isEmailVerified()
+    {
+        return sharedPreferences.getBoolean("EmailVerified", false);
+    }
+
+
 //    END OF THEME INFO
 
 

@@ -210,17 +210,17 @@ public class RegisterActivity extends BaseActivityG
                         {
                             JSONObject jbojInner = new JSONObject(jboj.getString(GlobalConstantsG.Message));
 
-                            SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(RegisterActivity.this);
+                            SharedPrefHelper sharedPrefHelper = getLocaldata();
                             sharedPrefHelper.setUserid(jbojInner.getString("CustomerId"));
                             sharedPrefHelper.setName(jbojInner.getString("FirstName"));
                             sharedPrefHelper.setEmail(jbojInner.getString("EmailId"));
                             sharedPrefHelper.setPhotoUrl(jbojInner.getString("PhotoPath"));
 
 
-                            Intent i = new Intent(RegisterActivity.this, HomeTabActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            sharedPrefHelper.setEmailVerified(false);
+
+                            Intent i = new Intent(RegisterActivity.this, Email_Verification.class);
                             startActivity(i);
-                            finish();
 
 
                         }

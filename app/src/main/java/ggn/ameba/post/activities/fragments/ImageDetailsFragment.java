@@ -21,6 +21,7 @@ import java.util.HashMap;
 import ggn.ameba.post.R;
 import ggn.ameba.post.UtillsG.CallBackG;
 import ggn.ameba.post.UtillsG.GlobalConstantsG;
+import ggn.ameba.post.UtillsG.ShowIntrensicAd;
 import ggn.ameba.post.UtillsG.UtillG;
 import ggn.ameba.post.WebService.SuperAsyncG;
 import ggn.ameba.post.activities.BlockListActivity;
@@ -140,36 +141,40 @@ public class ImageDetailsFragment extends BaseFragmentG
             @Override
             public void onClick(View view)
             {
-//                if (!getLocaldata().getUserid().equals(imageInfo.getHomeModel().getCustomerId()))
-//                {
-                if (BlockedByMe)
+                if (GlobalConstantsG.SHOW_Ad_MSG())
                 {
-                    UtillG.show_dialog_msg(getActivity(), "You have blocked this user. Go to settings to unblock " + imageInfo.getCustomerName() + " ?", new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View view)
-                        {
-                            UtillG.global_dialog.dismiss();
-                            startActivity(new Intent(getActivity(), BlockListActivity.class));
-                        }
-                    });
+                    ShowIntrensicAd.loadInterstitialAd(getActivity());
                 }
                 else
                 {
-                    RecentChatModel recentChatModel = new RecentChatModel();
-                    recentChatModel.setCustomerIdTo(imageInfo.getHomeModel().getCustomerId());
-                    recentChatModel.setCustomerName(imageInfo.getCustomerName());
-                    recentChatModel.setChatContent("");
-                    recentChatModel.setDateTimeCreated("");
-                    recentChatModel.setPhotoPath(imageInfo.getPhotoPath());
-                    recentChatModel.setIsRead("");
+                    if (BlockedByMe)
+                    {
+                        UtillG.show_dialog_msg(getActivity(), "You have blocked this user. Go to settings to unblock " + imageInfo.getCustomerName() + " ?", new View.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(View view)
+                            {
+                                UtillG.global_dialog.dismiss();
+                                startActivity(new Intent(getActivity(), BlockListActivity.class));
+                            }
+                        });
+                    }
+                    else
+                    {
+                        RecentChatModel recentChatModel = new RecentChatModel();
+                        recentChatModel.setCustomerIdTo(imageInfo.getHomeModel().getCustomerId());
+                        recentChatModel.setCustomerName(imageInfo.getCustomerName());
+                        recentChatModel.setChatContent("");
+                        recentChatModel.setDateTimeCreated("");
+                        recentChatModel.setPhotoPath(imageInfo.getPhotoPath());
+                        recentChatModel.setIsRead("");
 
 
-                    Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    intent.putExtra("data", recentChatModel);
-                    getActivity().startActivity(intent);
+                        Intent intent = new Intent(getActivity(), ChatActivity.class);
+                        intent.putExtra("data", recentChatModel);
+                        getActivity().startActivity(intent);
+                    }
                 }
-//                }
             }
         });
 
@@ -299,13 +304,19 @@ public class ImageDetailsFragment extends BaseFragmentG
             @Override
             public void onClick(View view)
             {
-
-                if (idCardModel != null)
+                if (GlobalConstantsG.SHOW_Ad_EYE())
                 {
-                    Intent intent = new Intent(getActivity(), ViewPostActivity.class);
-                    intent.putExtra("data", idCardModel);
-                    startActivity(intent);
+                    ShowIntrensicAd.loadInterstitialAd(getActivity());
+                }
+                else
+                {
+                    if (idCardModel != null)
+                    {
+                        Intent intent = new Intent(getActivity(), ViewPostActivity.class);
+                        intent.putExtra("data", idCardModel);
+                        startActivity(intent);
 
+                    }
                 }
             }
         });

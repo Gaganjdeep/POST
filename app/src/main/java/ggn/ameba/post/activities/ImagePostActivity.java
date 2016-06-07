@@ -169,7 +169,7 @@ public class ImagePostActivity extends CurrentLocActivityG
 
 
         Glide.with(this).load(imageUri).asBitmap().
-                into(new SimpleTarget<Bitmap>(500, 500)
+                into(new SimpleTarget<Bitmap>(450, 450)
                 {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)

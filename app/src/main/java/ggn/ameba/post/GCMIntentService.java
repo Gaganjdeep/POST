@@ -4,6 +4,7 @@ package ggn.ameba.post;
  * Created by gagandeep on 26 Apr 2016.
  */
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -74,6 +75,11 @@ public class GCMIntentService extends GCMBaseIntentService
 
         builder.setContentTitle("POST");
         builder.setContentText(message);
+
+        builder.setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(message));
+        builder.setPriority(Notification.PRIORITY_MAX);
+
 //        builder.setSubText("Tap to open EasyBeezee and set reminders..!");
 
 

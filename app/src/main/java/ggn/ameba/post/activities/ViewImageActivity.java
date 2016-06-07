@@ -63,36 +63,6 @@ public class ViewImageActivity extends BaseActivityG implements TimerListener
     }
 
 
-
-
-    /* private void openwithAnim()
-    {
-        Bundle b = getIntent().getExtras(); // Bundle passed from previous activity to this activity
-
-        int x  = b.getInt("X");              //b is button in previous activity
-        int y  = b.getInt("Y");              //b is button in previous activity
-        int xh = b.getInt("XH");            //b is button in previous activity
-        int yh = b.getInt("YH");            //b is button in previous activity
-
-        AnimationSet set = new AnimationSet(true);
-
-        int width  = getWindowManager().getDefaultDisplay().getWidth();
-        int height = getWindowManager().getDefaultDisplay().getHeight();
-
-
-        Animation scale = new ScaleAnimation((float) xh / width, 1f, (float) yh / height, 1f, x, y);
-
-        Animation alpha = new AlphaAnimation(.75f, 1f);
-
-        set.addAnimation(scale);
-        set.addAnimation(alpha);
-
-        set.setDuration(400);
-
-        ((LinearLayout) findViewById(R.id.layout)).startAnimation(set);
-    }*/
-
-
     @Override
     public void timerElapsed()
     {

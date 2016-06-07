@@ -89,7 +89,7 @@ public class SplashActivity extends BaseActivityG
                     }
                     else
                     {
-                        UtillG.show_dialog_msg(SplashActivity.this, "Unable to connect..,Please try again.", onClickListener);
+                        UtillG.show_dialog_msg(SplashActivity.this, "Unable to fetch active THEME..,Please try again.", onClickListener);
 
                         UtillG.showToast(jboj.getString(GlobalConstantsG.Message), SplashActivity.this, true);
                     }

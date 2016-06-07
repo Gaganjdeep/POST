@@ -101,24 +101,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 @Override
                 public void onClick(View view)
                 {
-                    if (GlobalConstantsG.SHOW_Ad())
+                    if (!var1.getString("deviceIdHash", "").equals(""))
                     {
-
-                        if (!var1.getString("deviceIdHash", "").equals(""))
-                        {
-                            String i = r.b(UUID.randomUUID().toString());
-                            var1.edit().putString("deviceIdHash", i).apply();
-                            AdSettings.addTestDevice(i);
-                        }
-
-                        ShowIntrensicAd.loadInterstitialAd(context);
+                        String i = r.b(UUID.randomUUID().toString());
+                        var1.edit().putString("deviceIdHash", i).apply();
+                        AdSettings.addTestDevice(i);
                     }
-                    else
-                    {
-                        Intent intent = new Intent(context, ViewImageActivity.class);
-                        intent.putExtra("data", (HomeModel) view.getTag());
-                        context.startActivity(intent);
-                    }
+
+                    Intent intent = new Intent(context, ViewImageActivity.class);
+                    intent.putExtra("data", (HomeModel) view.getTag());
+                    context.startActivity(intent);
                 }
             });
         }

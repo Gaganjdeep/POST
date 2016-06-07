@@ -118,7 +118,7 @@ public class LoginActivity extends BaseActivityG
             hashMap.put("ApplicationId", DeviceID);
             hashMap.put("DeviceType", "android");
 
-            new SuperAsyncG(GlobalConstantsG.URL + "Customer/ValidateUserCustomer", hashMap, new CallBackG<String>()
+            new SuperAsyncG(GlobalConstantsG.URL + "Customer/ValidateUserCustomer", hashMap,  new CallBackG<String>()
             {
                 @Override
                 public void callBack(String response)
@@ -135,7 +135,7 @@ public class LoginActivity extends BaseActivityG
                         {
                             JSONObject jbojInner = new JSONObject(jboj.getString(GlobalConstantsG.Message));
 
-                            SharedPrefHelper sharedPrefHelper = new SharedPrefHelper(LoginActivity.this);
+                            SharedPrefHelper sharedPrefHelper =getLocaldata();
                             sharedPrefHelper.setUserid(jbojInner.getString("CustomerId"));
                             sharedPrefHelper.setName(jbojInner.getString("FirstName"));
                             sharedPrefHelper.setEmail(jbojInner.getString("EmailId"));
@@ -143,12 +143,15 @@ public class LoginActivity extends BaseActivityG
 
                             sharedPrefHelper.setTagLine(jbojInner.getString("StatusLine"));
 
+
+                            sharedPrefHelper.setEmailVerified(true);
+
                             startActivity(new Intent(LoginActivity.this, HomeTabActivity.class));
                             finish();
                         }
                         else
                         {
-                            UtillG.showToast(jboj.getString(GlobalConstantsG.Message), LoginActivity.this, true);
+                            UtillG.showToast("User not exist.", LoginActivity.this, true);
                         }
 
                     }
@@ -238,6 +241,7 @@ public class LoginActivity extends BaseActivityG
             return;
         }
 
+        showProgress();
 
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("UserEmailAddress", mEmailView.getText().toString().trim());

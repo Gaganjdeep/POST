@@ -31,12 +31,14 @@ public class DateUtilsG
 
     public static Date dateServer(String date)
     {
-        sdfServer.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        sdfServer.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date_ = null;
         try
         {
             date_ = sdfServer.parse(date);
 
+
+            date_.setTime(date_.getTime()+TimeUnit.HOURS.toMillis(24)-(TimeUnit.SECONDS.toMillis(1)));
 
             return date_;
         }
@@ -50,7 +52,7 @@ public class DateUtilsG
 
     public static long timeLeft(String date)
     {
-        sdfServer.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        sdfServer.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         try
         {
