@@ -39,7 +39,8 @@ public class ViewImageActivity extends BaseActivityG implements TimerListener
 
 
         countdownview = (CountDownView) findViewById(R.id.countdownview);
-        countdownview.setInitialTime(DateUtilsG.timeLeft(getLocaldata().getThemeEndDate()));
+//        countdownview.setInitialTime(DateUtilsG.timeLeft(getLocaldata().getThemeEndDate()));
+        countdownview.setInitialTime(DateUtilsG.getRemainingTime(getLocaldata().getMiliSecondsLeft()));
 
         countdownview.start();
         countdownview.setListener(this);

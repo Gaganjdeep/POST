@@ -32,7 +32,7 @@ public class CountDownView extends RelativeLayout
     private String        mAlarmSoundPath;
     private TimerListener listener;
 
-    private static final Calendar      mTime      = Calendar.getInstance();
+//    private static final Calendar      mTime      = Calendar.getInstance();
     private static final DecimalFormat mFormatter = new DecimalFormat("00");
 
     private Messenger mMessenger = new Messenger(new Handler()
@@ -161,10 +161,10 @@ public class CountDownView extends RelativeLayout
 
     private void updateUI(long millisInFuture)
     {
-        mTime.setTimeInMillis(millisInFuture);
+//        mTime.setTimeInMillis(millisInFuture);
 
-        Calendar cal = new GregorianCalendar();
-        cal.setTimeInMillis(millisInFuture);
+//        Calendar cal = new GregorianCalendar();
+//        cal.setTimeInMillis(millisInFuture);
 
         String days     = "0";
         String hours    = "0";

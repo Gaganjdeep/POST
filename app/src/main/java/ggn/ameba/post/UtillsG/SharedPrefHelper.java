@@ -128,6 +128,17 @@ public class SharedPrefHelper
         return sharedPreferences.getString("MarqueeText", "");
     }
 
+    public void setMiliSecondsLeft(String MiliSecondsLeft)
+    {
+        edit.putString("MiliSecondsLeft", MiliSecondsLeft);
+        edit.apply();
+    }
+
+    public String getMiliSecondsLeft()
+    {
+        return sharedPreferences.getString("MiliSecondsLeft", "");
+    }
+
     public void setThemeName(String ThemeName)
     {
         edit.putString("ThemeName", ThemeName);

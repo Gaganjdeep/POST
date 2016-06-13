@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +43,8 @@ public class ImagePostActivity extends CurrentLocActivityG
     Location loc;
 
     TextView tvLocation;
+
+    EditText edHashTag;
 
 
     @Override
@@ -112,6 +115,7 @@ public class ImagePostActivity extends CurrentLocActivityG
 
 
         tvLocation = (TextView) findViewById(R.id.tvLocation);
+        edHashTag = (EditText) findViewById(R.id.edHashTag);
 
 //        imgView.setScaleEnabled(true);
 
@@ -169,12 +173,14 @@ public class ImagePostActivity extends CurrentLocActivityG
 
 
         Glide.with(this).load(imageUri).asBitmap().
-                into(new SimpleTarget<Bitmap>(450, 450)
+                into(new SimpleTarget<Bitmap>(250, 250)
                 {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation)
                     {
+
                         imgView.setImageBitmap(resource); // Possibly runOnUiThread()
+//                        imgView.setImageBitmap(((BitmapDrawable) imgView.getDrawable()).getBitmap()); // Possibly runOnUiThread()
                         imageSet = true;
                         displayLocation();
                     }
@@ -292,6 +298,9 @@ public class ImagePostActivity extends CurrentLocActivityG
         hashMap.put("ThemeID", sharedPrefHelper.getThemeID());
         hashMap.put("CustomerId", sharedPrefHelper.getUserid());
         hashMap.put("ImagePath", base64);
+
+
+        hashMap.put("HashTag", edHashTag.getText().toString());
 
 
         if (loc != null)

@@ -366,7 +366,7 @@ public class ChatActivity extends BaseActivityG
 
             String id               = "";
             String sender_userid    = getLocaldata().getUserid();
-            String recipient_userid = "597";
+            String recipient_userid = OtherUserData.getCustomerIdTo();
             String message          = edComment.getText().toString().trim();
 
             String created_at = sdf.format(new Date(System.currentTimeMillis()));
@@ -477,7 +477,7 @@ public class ChatActivity extends BaseActivityG
                                 date = date.substring(0, date.indexOf("."));
                             }
 
-                            String created_at = sdf.format(DateUtilsG.dateServer(date));
+                            String created_at = sdf.format(DateUtilsG.dateServerChat(date));
 
                             String profile_pic = isSender ? getLocaldata().getPhotoUrl() : OtherUserData.getPhotoPath();
                             String username    = isSender ? getLocaldata().getName() : OtherUserData.getCustomerName();
@@ -577,7 +577,7 @@ public class ChatActivity extends BaseActivityG
                                 date = date.substring(0, date.indexOf("."));
                             }
 
-                            String created_at = sdf.format(DateUtilsG.dateServer(date));
+                            String created_at = sdf.format(DateUtilsG.dateServerChat(date));
 
                             String profile_pic = isSender ? getLocaldata().getPhotoUrl() : OtherUserData.getPhotoPath();
                             String username    = isSender ? getLocaldata().getName() : OtherUserData.getCustomerName();

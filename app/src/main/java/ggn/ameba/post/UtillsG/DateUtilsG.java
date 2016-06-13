@@ -12,12 +12,15 @@ import java.util.concurrent.TimeUnit;
 public class DateUtilsG
 {
 
-    public static String SEVER_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
-    public static String G_FORMAT     = "MMM dd,hh:mm a";
-    public static String G_FORMAT_SHORT     = "MMM dd";
+    public static String SEVER_FORMAT   = "yyyy-MM-dd'T'HH:mm:ss";
+    public static String G_FORMAT       = "MMM dd,hh:mm a";
+    public static String G_FORMAT_SHORT = "MMM dd";
 
 
     private static final SimpleDateFormat sdfServer = new SimpleDateFormat(SEVER_FORMAT);
+
+    private static final SimpleDateFormat sdfServerThemeInfo = new SimpleDateFormat(SEVER_FORMAT);
+
     private static final SimpleDateFormat sdfG      = new SimpleDateFormat(G_FORMAT);
 
     public static Date getCurrentDate()
@@ -35,10 +38,10 @@ public class DateUtilsG
         Date date_ = null;
         try
         {
-            date_ = sdfServer.parse(date);
+            date_ = sdfServerThemeInfo.parse(date);
 
 
-            date_.setTime(date_.getTime()+TimeUnit.HOURS.toMillis(24)-(TimeUnit.SECONDS.toMillis(1)));
+//            date_.setTime(date_.getTime() + TimeUnit.HOURS.toMillis(24) - (TimeUnit.SECONDS.toMillis(1)));
 
             return date_;
         }
@@ -47,6 +50,30 @@ public class DateUtilsG
             e.printStackTrace();
             return date_;
         }
+    }
+
+
+    public static Date dateServerChat(String date)
+    {
+        sdfServer.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date date_ = null;
+        try
+        {
+            date_ = sdfServer.parse(date);
+
+            return date_;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return date_;
+        }
+    }
+
+
+    public static long getRemainingTime(String time)
+    {
+        return Long.parseLong(time);
     }
 
 

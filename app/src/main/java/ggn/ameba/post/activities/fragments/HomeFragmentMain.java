@@ -80,7 +80,7 @@ public class HomeFragmentMain extends BaseFragmentG implements TimerListener
     @Override
     public void onResume()
     {
-        countdownview.setInitialTime(DateUtilsG.timeLeft(getLocaldata().getThemeEndDate()));
+        countdownview.setInitialTime(DateUtilsG.getRemainingTime(getLocaldata().getMiliSecondsLeft()));
         countdownview.start();
         countdownview.setListener(this);
 
@@ -125,6 +125,8 @@ public class HomeFragmentMain extends BaseFragmentG implements TimerListener
 
                             sharedPrefHelper.setThemeID(jbojInner.getString("ThemeID"));
                             sharedPrefHelper.setMarqueeText(jbojInner.getString("MarqueeText"));
+
+                            sharedPrefHelper.setMiliSecondsLeft(jbojInner.optString("MiliSecondsLeft"));
 
 
                             UtillG.showToast("Theme Updated..!", getActivity(), true);

@@ -23,6 +23,7 @@ import ggn.ameba.post.UtillsG.CallBackG;
 import ggn.ameba.post.UtillsG.DateUtilsG;
 import ggn.ameba.post.UtillsG.GlobalConstantsG;
 import ggn.ameba.post.WebService.SuperAsyncG;
+import ggn.ameba.post.adapter.HomeModel;
 import ggn.ameba.post.adapter.WallFameAdapter;
 import ggn.ameba.post.adapter.WallOfFameModel;
 
@@ -118,6 +119,9 @@ public class WallFameFragment extends BaseFragmentG
                             homemodel.setThemeID(jInner.getString("ThemeID"));
                             homemodel.setThemeName(jInner.getString("ThemeName"));
 
+                            homemodel.setCustomerId(jInner.getString("CustomerId"));
+                            homemodel.setThemePostId(jInner.getString("ThemePostId"));
+
 
 //                            "ThemeID": ​38,
 //                                "ThemeName": "Food",
@@ -128,7 +132,6 @@ public class WallFameFragment extends BaseFragmentG
 //                                "ViewCount": ​11,
 //                                "LikeCount": ​0,
 //                                "CommentCount": ​0
-
 
                             listData.add(homemodel);
                         }

@@ -147,7 +147,7 @@ public class GCMIntentService extends GCMBaseIntentService
                 recentChatModel.setCustomerName(jobj.getString("UserName"));
                 recentChatModel.setChatContent("");
                 recentChatModel.setDateTimeCreated("");
-                recentChatModel.setPhotoPath(jobj.getString("PhotoPath"));
+                recentChatModel.setPhotoPath(jobj.optString("PhotoPath"));
                 recentChatModel.setIsRead("");
 
                 notificationIntent.putExtra("data", recentChatModel);

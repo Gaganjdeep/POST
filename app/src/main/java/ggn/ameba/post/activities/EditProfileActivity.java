@@ -58,8 +58,19 @@ public class EditProfileActivity extends BaseActivityG
     {
         imgProfilePic.setImageUrlRound(EditProfileActivity.this, getLocaldata().getPhotoUrl());
         edname.setText(getLocaldata().getName());
+
         edemail.setText(getLocaldata().getEmail());
-        edTagline.setText(getLocaldata().getTagLine());
+
+
+
+
+        if (!getLocaldata().getTagLine().equals("null") && !getLocaldata().getTagLine().isEmpty())
+        {
+            edTagline.setText(getLocaldata().getTagLine());
+        }
+
+
+
     }
 
 

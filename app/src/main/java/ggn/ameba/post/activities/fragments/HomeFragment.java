@@ -155,7 +155,7 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
     String keywordG = "";
 
 
-    private void showData(final int pageNUmber, String keyword)
+    private void showData(final int pageNUmber, final String keyword)
     {
         if (pageNUmber == 0)
         {
@@ -225,6 +225,13 @@ public class HomeFragment extends BaseFragmentG implements View.OnClickListener,
                     }
                     else
                     {
+
+                        if(!keyword.equals(""))
+                        {
+                            listHome.clear();
+                            homeAdapter.notifyDataSetChanged();
+                        }
+
 //                        UtillG.showToast(jboj.getString(GlobalConstantsG.Message), getActivity(), true);
                     }
 

@@ -7,7 +7,37 @@ public class WallOfFameModel
 {
 
 
-    private String ThemeID, ThemeName, ThemeStartDate, ThemeEndDate, WallFamePhoto;
+    private String ThemeID;
+    private String ThemeName;
+    private String ThemeStartDate;
+    private String ThemeEndDate;
+    private String WallFamePhoto;
+    private String CustomerId;
+
+    public String getThemePostId()
+    {
+        return ThemePostId;
+    }
+
+    public void setThemePostId(String themePostId)
+    {
+        ThemePostId = themePostId;
+    }
+
+    public String getCustomerId()
+    {
+        return CustomerId;
+    }
+
+    public void setCustomerId(String customerId)
+    {
+        CustomerId = customerId;
+    }
+
+    private String ThemePostId;
+
+
+
 
     public String getThemeID()
     {

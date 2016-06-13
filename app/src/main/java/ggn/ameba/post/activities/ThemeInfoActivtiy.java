@@ -29,7 +29,7 @@ public class ThemeInfoActivtiy extends BaseActivityG
         showDate();
     }
 
-    SimpleDateFormat sdf = new SimpleDateFormat(DateUtilsG.G_FORMAT, Locale.US);
+    SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,hh:mm:ss a", Locale.US);
 
     private void showDate()
     {
@@ -45,7 +45,7 @@ public class ThemeInfoActivtiy extends BaseActivityG
 
 
             tvThemeName.setText("Theme Name : " + getLocaldata().getThemeName());
-            tvEndDate.setText("End Date : " + created_at);
+            tvEndDate.setText("End Date : " + created_at + " (EST Time)");
 
             tvOverview.setText("Overview : " + getLocaldata().getThemeOverview());
 

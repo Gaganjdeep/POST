@@ -1,6 +1,7 @@
 package ggn.ameba.post.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import ggn.ameba.post.R;
+import ggn.ameba.post.activities.ViewImageActivity;
 import ggn.ameba.post.widget.RoundedCornersGaganImg;
 
 /**
@@ -39,9 +41,7 @@ public class WallFameAdapter extends RecyclerView.Adapter<WallFameAdapter.HomeVi
     @Override
     public void onBindViewHolder(final HomeViewHolders holder, int position)
     {
-
         WallOfFameModel currentData = itemList.get(position);
-
 
         holder.tvThemeName.setText("Theme : " + currentData.getThemeName());
 
@@ -50,12 +50,36 @@ public class WallFameAdapter extends RecyclerView.Adapter<WallFameAdapter.HomeVi
         {
             holder.layoutNoImage.setVisibility(View.GONE);
             holder.imgVpost.setImageUrlWall(context, currentData.getWallFamePhoto());
+
+            holder.imgVpost.setTag(currentData);
+            holder.imgVpost.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+
+                    WallOfFameModel model = ((WallOfFameModel) view.getTag());
+
+                    HomeModel homemodel = new HomeModel();
+                    homemodel.setImagePath(model.getWallFamePhoto());
+                    homemodel.setCreatedDate(model.getThemeStartDate());
+                    homemodel.setCustomerId(model.getCustomerId());
+                    homemodel.setThemePostId(model.getThemePostId());
+                    homemodel.setThemeId(model.getThemeID());
+
+                    Intent intent = new Intent(context, ViewImageActivity.class);
+                    intent.putExtra("data", homemodel);
+                    context.startActivity(intent);
+
+                }
+            });
+
+
         }
         else
         {
             holder.layoutNoImage.setVisibility(View.VISIBLE);
             holder.imgVpost.setVisibility(View.GONE);
-
 
             holder.tvdate.setText(currentData.getThemeEndDate());
 

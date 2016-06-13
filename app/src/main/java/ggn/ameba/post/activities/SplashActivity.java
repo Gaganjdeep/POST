@@ -77,7 +77,10 @@ public class SplashActivity extends BaseActivityG
                         sharedPrefHelper.setThemeID(jbojInner.getString("ThemeID"));
                         sharedPrefHelper.setMarqueeText(jbojInner.getString("MarqueeText"));
 
-                        if (getLocaldata().getUserid().equals(""))
+                        sharedPrefHelper.setMiliSecondsLeft(jbojInner.optString("MiliSecondsLeft"));
+
+
+                        if (getLocaldata().getUserid().equals("") || !getLocaldata().isEmailVerified())
                         {
                             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                         }

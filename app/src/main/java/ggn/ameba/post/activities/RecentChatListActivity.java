@@ -115,7 +115,7 @@ public class RecentChatListActivity extends BaseActivityG
                                 date = date.substring(0, date.indexOf("."));
                             }
 
-                            String created_at = sdf.format(DateUtilsG.dateServer(date));
+                            String created_at = sdf.format(DateUtilsG.dateServerChat(date));
                             recentChatModel.setDateTimeCreated(created_at);
 
 

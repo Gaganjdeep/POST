@@ -140,6 +140,9 @@ public class Email_Verification extends BaseActivityG implements View.OnClickLis
 
                                     UtillG.showToast(jboj.getString(GlobalConstantsG.Message), Email_Verification.this, true);
 
+
+                                    getLocaldata().setEmailVerified(true);
+
                                     Intent i = new Intent(Email_Verification.this, HomeTabActivity.class);
                                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(i);

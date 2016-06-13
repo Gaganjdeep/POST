@@ -211,6 +211,10 @@ public class RoundedCornersGaganImg extends ImageView
                     .error(R.mipmap.ic_default_pic_rounded)
                     .into(this);
         }
+        else
+        {
+            this.setBackgroundResource(R.mipmap.ic_default_pic_rounded);
+        }
      /*   Glide
                 .with(con)
                 .load(URL)
