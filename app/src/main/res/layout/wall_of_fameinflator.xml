@@ -13,7 +13,7 @@
         android:background="@mipmap/frame_wall_of_fame"
         android:padding="17dp">
 
-        <ggn.ameba.post.widget.RoundedCornersGaganImg
+        <com.ariseden.post.widget.RoundedCornersGaganImg
             android:id="@+id/imgVpost"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

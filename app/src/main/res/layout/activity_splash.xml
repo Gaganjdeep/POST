@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/splash_bg"
-    tools:context="ggn.ameba.post.activities.SplashActivity">
+    tools:context="com.ariseden.post.activities.SplashActivity">
 
 
     <ImageView

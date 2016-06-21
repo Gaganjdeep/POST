@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="ggn.ameba.post"
+<manifest package="com.ariseden.post"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -17,10 +17,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <permission
-        android:name="ggn.ameba.post.permission.C2D_MESSAGE"
+        android:name="com.ariseden.post.permission.C2D_MESSAGE"
         android:protectionLevel="signature"/>
 
-    <uses-permission android:name="ggn.ameba.post.permission.C2D_MESSAGE"/>
+    <uses-permission android:name="com.ameba.post.permission.C2D_MESSAGE"/>
 
     <application
         android:allowBackup="true"
@@ -29,25 +29,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".activities.HomeTabActivity"
+            android:name="com.ariseden.post.activities.HomeTabActivity"
             android:screenOrientation="sensorPortrait">
         </activity>
 
-        <service android:name=".widget.TimerService"/>
+        <service android:name="com.ariseden.post.widget.TimerService"/>
 
         <activity
-            android:name=".activities.ImagePostActivity"
+            android:name="com.ariseden.post.activities.ImagePostActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.ariseden.post.activities.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.ariseden.post.activities.SplashActivity"
             android:noHistory="true"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
@@ -57,37 +57,37 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name="com.ariseden.post.activities.RegisterActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name=".activities.EditProfileActivity"
+            android:name="com.ariseden.post.activities.EditProfileActivity"
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name="com.ariseden.post.activities.SettingsActivity"
             android:screenOrientation="sensorPortrait">
         </activity>
         <activity
-            android:name=".activities.ViewPostActivity"
+            android:name="com.ariseden.post.activities.ViewPostActivity"
             android:screenOrientation="sensorPortrait">
         </activity>
         <activity
-            android:name=".activities.ChatActivity"
+            android:name="com.ariseden.post.activities.ChatActivity"
             android:screenOrientation="sensorPortrait">
         </activity>
         <activity
-            android:name=".activities.RecentChatListActivity"
+            android:name="com.ariseden.post.activities.RecentChatListActivity"
             android:screenOrientation="sensorPortrait">
         </activity>
         <activity
-            android:name=".activities.ViewImageActivity"
+            android:name="com.ariseden.post.activities.ViewImageActivity"
             android:screenOrientation="sensorPortrait">
         </activity>
 
-        <service android:name=".GCMIntentService"/>
+        <service android:name="com.ariseden.post.GCMIntentService"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -100,26 +100,26 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
 
-                <category android:name="ggn.ameba.post"/>
+                <category android:name="com.ameba.post"/>
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.ThemeInfoActivtiy">
+        <activity android:name="com.ariseden.post.activities.ThemeInfoActivtiy">
         </activity>
         <activity
-            android:name=".activities.OpenImageActivity"
+            android:name="com.ariseden.post.activities.OpenImageActivity"
             android:theme="@style/Theme_Dialog">
         </activity>
-        <activity android:name=".activities.BlockListActivity">
+        <activity android:name="com.ariseden.post.activities.BlockListActivity">
         </activity>
         <activity
-            android:name=".activities.CommentsListActivity"
+            android:name="com.ariseden.post.activities.CommentsListActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar">
         </activity>
         <activity
             android:name="com.facebook.ads.InterstitialAdActivity"
             android:configChanges="keyboardHidden|orientation"/>
-        <activity android:name=".activities.Email_Verification">
+        <activity android:name="com.ariseden.post.activities.Email_Verification">
         </activity>
     </application>
 

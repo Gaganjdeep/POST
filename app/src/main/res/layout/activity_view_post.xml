@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/black"
-    tools:context="ggn.ameba.post.activities.ViewPostActivity">
+    tools:context="com.ariseden.post.activities.ViewPostActivity">
 
 
     <include

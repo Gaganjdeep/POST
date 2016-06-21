@@ -86,7 +86,7 @@
             android:background="@drawable/white_circle"
             android:padding="2dp">
 
-            <ggn.ameba.post.widget.RoundedCornersGaganImg
+            <com.ariseden.post.widget.RoundedCornersGaganImg
                 android:id="@+id/imgProfile"
                 android:layout_width="90dp"
                 android:layout_height="90dp"

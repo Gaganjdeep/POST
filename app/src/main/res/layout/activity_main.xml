@@ -7,9 +7,9 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
-    tools:context=".activities.fragments.HomeFragmentMain">
+    tools:context="com.ariseden.post.activities.fragments.HomeFragmentMain">
 
-    <ggn.ameba.post.widget.CountDownView
+    <com.ariseden.post.widget.CountDownView
         android:id="@+id/countdownview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

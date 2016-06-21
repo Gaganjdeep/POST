@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".activities.ImagePostActivity">
+    tools:context="com.ariseden.post.activities.ImagePostActivity">
 
 
     <android.support.v7.widget.Toolbar

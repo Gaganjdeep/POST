@@ -5,7 +5,7 @@
               android:background="@color/black"
               android:gravity="center"
               android:orientation="vertical"
-              tools:context="ggn.ameba.post.activities.fragments.WallFameFragment">
+              tools:context="com.ariseden.post.activities.fragments.WallFameFragment">
 
 
     <LinearLayout

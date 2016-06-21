@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:background="@mipmap/splash_bg"
               android:orientation="vertical"
-              tools:context="ggn.ameba.post.activities.LoginActivity">
+              tools:context="com.ariseden.post.activities.LoginActivity">
 
 
     <android.support.v7.widget.Toolbar
@@ -32,7 +32,7 @@
             >
 
 
-            <ggn.ameba.post.widget.RoundedCornersGaganImg
+            <com.ariseden.post.widget.RoundedCornersGaganImg
                 android:id="@+id/imgProfilePic"
                 android:layout_width="120dp"
                 android:layout_height="120dp"

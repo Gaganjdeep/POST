@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
-    tools:context="ggn.ameba.post.activities.ViewImageActivity">
+    tools:context="com.ariseden.post.activities.ViewImageActivity">
 
 
     <!-- <ScrollView
@@ -22,7 +22,7 @@
          android:orientation="vertical">-->
 
 
-    <ggn.ameba.post.widget.CountDownView
+    <com.ariseden.post.widget.CountDownView
         android:id="@+id/countdownview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         android:padding="2dp">
 
 
-        <ggn.ameba.post.widget.RoundedCornersGaganImg
+        <arisedenden.post.widget.RoundedCornersGaganImg
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/food_demo_img"/>

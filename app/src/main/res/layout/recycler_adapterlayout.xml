@@ -7,7 +7,7 @@
               android:padding="2dp">
 
 
-    <ggn.ameba.post.widget.RoundedCornersGaganImg
+    <com.ariseden.post.widget.RoundedCornersGaganImg
         android:id="@+id/imgVpost"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
