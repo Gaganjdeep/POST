@@ -77,7 +77,10 @@ public class RecentChatListActivity extends BaseActivityG
     {
 
 
-        showProgress();
+        if (listData.isEmpty())
+        {
+            showProgress();
+        }
 
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("CustomerIdBy", getLocaldata().getUserid());

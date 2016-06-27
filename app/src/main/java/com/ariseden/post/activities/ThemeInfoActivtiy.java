@@ -21,11 +21,9 @@ public class ThemeInfoActivtiy extends BaseActivityG
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_theme_info_activtiy);
 
-
         tvEndDate = (TextView) findViewById(R.id.tvEndDate);
         tvThemeName = (TextView) findViewById(R.id.tvThemeName);
         tvOverview = (TextView) findViewById(R.id.tvOverview);
-
 
         showDate();
     }

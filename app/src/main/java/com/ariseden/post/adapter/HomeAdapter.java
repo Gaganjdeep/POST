@@ -21,11 +21,11 @@ import com.facebook.ads.AdListener;
 import com.facebook.ads.AdSettings;
 import com.facebook.ads.MediaView;
 import com.facebook.ads.NativeAd;
-import com.facebook.ads.internal.util.r;
 
 import java.util.List;
 import java.util.UUID;
 import com.ariseden.post.R;
+import com.facebook.ads.internal.util.u;
 
 /**
  * Created by gagandeep on 14 Apr 2016.
@@ -93,7 +93,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 {
                     if (!var1.getString("deviceIdHash", "").equals(""))
                     {
-                        String i = r.b(UUID.randomUUID().toString());
+                        String i = u.b(UUID.randomUUID().toString());
                         var1.edit().putString("deviceIdHash", i).apply();
                         AdSettings.addTestDevice(i);
                     }
@@ -152,7 +152,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         final LinearLayout adView   = (LinearLayout) inflater.inflate(R.layout.ad_unit, layout);
 
 //        AdSettings.addTestDevice("7ffbe159364e446d0a207af123739cba");
-        String i = r.b(UUID.randomUUID().toString());
+        String i = u.b(UUID.randomUUID().toString());
         if (!var1.getString("deviceIdHash", "").equals(i))
         {
             var1.edit().putString("deviceIdHash", i).apply();

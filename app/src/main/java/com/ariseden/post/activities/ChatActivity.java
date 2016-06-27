@@ -19,10 +19,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.ariseden.post.UtillsG.GlobalConstantsG;
+import com.ariseden.post.UtillsG.ShowIntrensicAd;
 import com.ariseden.post.WebService.SuperAsyncG;
+import com.ariseden.post.adapter.IdCardModel;
+import com.ariseden.post.widget.RoundedCornersGaganImg;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -58,6 +63,11 @@ public class ChatActivity extends BaseActivityG
     List<MsgDataModel> listData;
 
     RecentChatModel OtherUserData;
+
+
+    private RoundedCornersGaganImg imgVuserimg;
+    private TextView               tvName;
+    private LinearLayout           layoutUsersdetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -284,13 +294,21 @@ public class ChatActivity extends BaseActivityG
     {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(OtherUserData.getCustomerName());
+        getSupportActionBar().setTitle("");
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.arrow_white);
 
 
-        try
+        imgVuserimg = (RoundedCornersGaganImg) findViewById(R.id.imgVuserimg);
+        tvName = (TextView) findViewById(R.id.tvName);
+        layoutUsersdetails = (LinearLayout) findViewById(R.id.layoutUsersdetails);
+
+
+        tvName.setText(OtherUserData.getCustomerName());
+     /*   try
         {
 //            Drawable drawable = new ScaleDrawable(getResources().getDrawable(R.mipmap.ic_default_pic_rounded), Gravity.LEFT, 30, 30).getDrawable();
 //
@@ -305,31 +323,28 @@ public class ChatActivity extends BaseActivityG
         catch (Exception e)
         {
             e.printStackTrace();
-        }
+        }*/
 
         if (!OtherUserData.getPhotoPath().isEmpty())
         {
-            Picasso.with(ChatActivity.this).load(OtherUserData.getPhotoPath()).resize(60, 60).transform(new CircleTransform()).centerInside().priority(Picasso.Priority.HIGH).into(new Target()
-            {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
-                {
-                    toolbar.setLogo(new BitmapDrawable(getResources(), bitmap));
-                }
 
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable)
-                {
-
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable)
-                {
-
-                }
-            });
+            Picasso.with(ChatActivity.this).load(OtherUserData.getPhotoPath()).resize(50, 50).transform(new CircleTransform()).centerInside().error(R.mipmap.ic_default_pic_rounded).priority(Picasso.Priority.HIGH).into(imgVuserimg);
         }
+
+
+        layoutUsersdetails.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+
+                Intent intent = new Intent(ChatActivity.this, ViewPostActivity.class);
+                intent.putExtra("data", new IdCardModel(OtherUserData.getPhotoPath() + "", OtherUserData.getCustomerName(), "", "Status", OtherUserData.getCustomerIdTo()));
+                startActivity(intent);
+
+            }
+        });
+
 
     }
 

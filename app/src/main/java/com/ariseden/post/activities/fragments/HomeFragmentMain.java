@@ -75,6 +75,7 @@ public class HomeFragmentMain extends BaseFragmentG implements TimerListener
     @Override
     public void onResume()
     {
+//        countdownview.setInitialTime(148494265);
         countdownview.setInitialTime(DateUtilsG.getRemainingTime(getLocaldata().getMiliSecondsLeft()));
         countdownview.start();
         countdownview.setListener(this);
