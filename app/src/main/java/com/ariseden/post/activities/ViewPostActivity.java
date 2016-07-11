@@ -14,6 +14,7 @@ import com.ariseden.post.adapter.HomeModel;
 import com.ariseden.post.adapter.IdCardModel;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -78,9 +79,47 @@ public class ViewPostActivity extends BaseActivityG
         tvStatusLine = (TextView) viewIdCard.findViewById(R.id.tvStatusLine);
         tvStatusLine.setVisibility(View.VISIBLE);
 
-        String tagLIne = idCardModel.getTagLine().equals("null") ? "status" : idCardModel.getTagLine();
+//        String tagLIne = idCardModel.getTagLine().equals("null") ? "status" : idCardModel.getTagLine();
 
-        tvStatusLine.setText(tagLIne);
+
+        if (idCardModel.getTagLine().equals("null") || idCardModel.getTagLine().equals(""))
+        {
+            new SuperAsyncG(GlobalConstantsG.URL + "Customer/GetCustomerStatus?CustomerId=" + idCardModel.getUserId(), new HashMap<String, String>(), new CallBackG<String>()
+            {
+                @Override
+                public void callBack(String response)
+                {
+//                    "Status": "success",
+//                        "Message": "hello123"
+                    try
+                    {
+                        JSONObject jboj = new JSONObject(response);
+
+                        if (jboj.getString(GlobalConstantsG.Status).equals(GlobalConstantsG.success))
+                        {
+                            if (jboj.getString(GlobalConstantsG.Message).equals("null") || jboj.getString(GlobalConstantsG.Message).equals(""))
+                            {
+                                tvStatusLine.setText("Status");
+
+                            }
+                            else
+                            {
+                                tvStatusLine.setText(jboj.getString(GlobalConstantsG.Message));
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                }
+            }).execute();
+        }
+        else
+        {
+            tvStatusLine.setText(idCardModel.getTagLine());
+        }
 
 
         TextView tv = (TextView) viewIdCard.findViewById(R.id.tvPostId);

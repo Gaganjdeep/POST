@@ -302,16 +302,23 @@ public class ImagePostActivity extends CurrentLocActivityG
         hashMap.put("HashTag", edHashTag.getText().toString());
 
 
-        if (loc != null)
+        if (sharedPrefHelper.isshowlocation())
         {
-            hashMap.put("TagLocation", tvLocation.getText().toString());
-            hashMap.put("Latitude", loc.getLatitude() + "");
-            hashMap.put("Longitude", loc.getLongitude() + "");
+            if (loc != null)
+            {
+                hashMap.put("TagLocation", tvLocation.getText().toString());
+                hashMap.put("Latitude", loc.getLatitude() + "");
+                hashMap.put("Longitude", loc.getLongitude() + "");
+            }
+            else
+            {
+                displayLocation();
+
+            }
         }
         else
         {
-            displayLocation();
-
+            hashMap.put("TagLocation", "Unknown Location");
         }
 
         Log.e("map", "" + hashMap);

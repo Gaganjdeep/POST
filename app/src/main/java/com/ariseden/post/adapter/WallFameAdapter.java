@@ -50,6 +50,9 @@ public class WallFameAdapter extends RecyclerView.Adapter<WallFameAdapter.HomeVi
         if (!currentData.getWallFamePhoto().isEmpty())
         {
             holder.layoutNoImage.setVisibility(View.GONE);
+            holder.imgVpost.setVisibility(View.VISIBLE);
+
+
             holder.imgVpost.setImageUrlWall(context, currentData.getWallFamePhoto());
 
             holder.imgVpost.setTag(currentData);

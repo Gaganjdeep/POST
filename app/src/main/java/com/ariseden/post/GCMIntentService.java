@@ -150,8 +150,8 @@ public class GCMIntentService extends GCMBaseIntentService
                 recentChatModel.setDateTimeCreated("");
                 recentChatModel.setPhotoPath(jobj.optString("PhotoPath"));
                 recentChatModel.setIsRead("");
-
                 notificationIntent.putExtra("data", recentChatModel);
+
             }
             else
             {

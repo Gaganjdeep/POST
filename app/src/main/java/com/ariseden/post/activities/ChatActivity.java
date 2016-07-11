@@ -328,7 +328,7 @@ public class ChatActivity extends BaseActivityG
         if (!OtherUserData.getPhotoPath().isEmpty())
         {
 
-            Picasso.with(ChatActivity.this).load(OtherUserData.getPhotoPath()).resize(50, 50).transform(new CircleTransform()).centerInside().error(R.mipmap.ic_default_pic_rounded).priority(Picasso.Priority.HIGH).into(imgVuserimg);
+            Picasso.with(ChatActivity.this).load(OtherUserData.getPhotoPath()).resize(50, 50).transform(new CircleTransform()).centerInside().placeholder(R.mipmap.ic_default_pic_rounded).error(R.mipmap.ic_default_pic_rounded).priority(Picasso.Priority.HIGH).into(imgVuserimg);
         }
 
 
@@ -339,7 +339,7 @@ public class ChatActivity extends BaseActivityG
             {
 
                 Intent intent = new Intent(ChatActivity.this, ViewPostActivity.class);
-                intent.putExtra("data", new IdCardModel(OtherUserData.getPhotoPath() + "", OtherUserData.getCustomerName(), "", "Status", OtherUserData.getCustomerIdTo()));
+                intent.putExtra("data", new IdCardModel(OtherUserData.getPhotoPath() + "", OtherUserData.getCustomerName(), "", "", OtherUserData.getCustomerIdTo()));
                 startActivity(intent);
 
             }

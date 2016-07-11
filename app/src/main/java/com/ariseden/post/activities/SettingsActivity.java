@@ -3,7 +3,11 @@ package com.ariseden.post.activities;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,12 +38,49 @@ public class SettingsActivity extends BaseActivityG
 
     private IdCardModel idCardModel;
 
+    private SwitchCompat      notification_switch;
+    private AppCompatCheckBox notification_chkbox;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+
+        notification_switch = (SwitchCompat) findViewById(R.id.notification_switch);
+
+        notification_switch.setChecked(getLocaldata().isshowlocation());
+
+
+        notification_chkbox = (AppCompatCheckBox) findViewById(R.id.notification_chkbox);
+
+        notification_chkbox.setChecked(getLocaldata().isNotifing());
+
+
+        notification_chkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            {
+                getLocaldata().setisNotifing(b);
+            }
+        });
+
+
+        notification_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            {
+                getLocaldata().setshowlocation(b);
+            }
+        });
+
+
     }
+
 
     @Override
     protected void onResume()

@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import com.ariseden.post.R;
 import com.ariseden.post.UtillsG.CallBackG;
@@ -406,6 +407,7 @@ public class CommentsListActivity extends Activity
             {
                 holder.tvtime.setVisibility(View.VISIBLE);
                 SimpleDateFormat sdf       = new SimpleDateFormat(DateUtilsG.SEVER_FORMAT);
+//                sdfServer.setTimeZone(TimeZone.getTimeZone("UTC"));
                 SimpleDateFormat sdfDesire = new SimpleDateFormat("dd MMM hh:mm a");
                 Date             date      = sdf.parse(currentData.getCreate_date());
                 holder.tvtime.setText(sdfDesire.format(date));

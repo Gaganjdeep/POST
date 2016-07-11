@@ -199,6 +199,30 @@ public class SharedPrefHelper
     }
 
 
+    public void setisNotifing(boolean isNotifing)
+    {
+        edit.putBoolean("isNotifing", isNotifing);
+        edit.apply();
+    }
+
+    public boolean isNotifing()
+    {
+        return sharedPreferences.getBoolean("isNotifing", true);
+    }
+
+
+    public void setshowlocation(boolean showlocation)
+    {
+        edit.putBoolean("showlocation", showlocation);
+        edit.apply();
+    }
+
+    public boolean isshowlocation()
+    {
+        return sharedPreferences.getBoolean("showlocation", true);
+    }
+
+
 //    END OF THEME INFO
 
 
